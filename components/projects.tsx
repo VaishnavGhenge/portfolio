@@ -19,7 +19,7 @@ export default function Projects() {
         },
         {
             title: "Quiz App",
-            url: "https://github.com/VaishnavGhenge/quizapp",
+            url: "https://quizapp-vaishnavghenge.vercel.app/",
             description:
                 "Quiz app is a web application which provides a platform to create and play quizzes",
             tech: [
