@@ -26,7 +26,7 @@ export default function RootLayout({
                                 </h1>
                                 <h2 className='mt-3 text-lg font-medium tracking-tight'>
                                     <span className='mr-1'>
-                                        Application Developer Intern at
+                                        Application Developer at
                                     </span>
                                     <a
                                         href='https://www.noovosoft.com/'

@@ -3,7 +3,7 @@ export default function Projects() {
         {
             title: "Vartalaap",
             url: "https://vartalaap-client.vercel.app/",
-            titleExplaination: "Video calling app with reltime captions",
+            titleExplaination: "Video calling app with real-time captions",
             description:
                 "Vartalaap is a video calling app like Google meet which provides real-time video calling service as well as real-time captions for users",
             tech: [
@@ -14,7 +14,7 @@ export default function Projects() {
                 "React",
                 "TypeScript",
                 "Python",
-                "PostgreSQL",
+                "PostgresSQL",
             ],
         },
         {
