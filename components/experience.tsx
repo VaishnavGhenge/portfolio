@@ -6,7 +6,7 @@ export default function Experience() {
             to: "Present",
             role: "Application Developer",
             description:
-                "As an Application Developer Intern at Noovosoft, I played a key role in a major project, mastering the interplay of Angular and Django. My responsibilities included full-stack development, collaborating with cross-functional teams, and ensuring a seamless user experience through Angular interfaces. In the backend, I leveraged Django to implement robust solutions and RESTful APIs.",
+                "As an Application Developer at Noovosoft, I played a key role in a major project, mastering the interplay of Angular and Django. My responsibilities included full-stack development, collaborating with cross-functional teams, and ensuring a seamless user experience through Angular interfaces. In the backend, I leveraged Django to implement robust solutions and RESTful APIs.",
             skills: ["Angular", "Django", "TypeScript", "JavaScript", "Python"],
         },
     ];
