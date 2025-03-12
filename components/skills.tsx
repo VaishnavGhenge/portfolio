@@ -3,52 +3,52 @@ import Image from 'next/image'
 export default function Skills() {
     const skills = [
         {
-            src: 'next.svg',
-            alt: 'NextJS',
-            width: 40,
-            height: 40
-        },
-        {
-            src: 'angular.svg',
-            alt: 'Angular',
-            width: 40,
-            height: 40
-        },
-        {
-            src: 'react.svg',
-            alt: 'React',
-            width: 40,
-            height: 40
-        },
-        {
-            src: 'typescript.svg',
-            alt: 'TypeScript',
-            width: 40,
-            height: 40
-        },
-        {
-            src: 'javascript.svg',
-            alt: 'JavaScript',
-            width: 40,
-            height: 40
-        },
-        {
-            src: 'java.svg',
-            alt: 'Java',
-            width: 40,
-            height: 40
-        },
-        {
-            src: 'python.svg',
+            src: '/python.svg',
             alt: 'Python',
             width: 40,
             height: 40
         },
         {
-            src: 'django.svg',
+            src: '/django.svg',
             alt: 'Django',
             width: 40,
             height: 40,
+        },
+        {
+            src: '/angular.png',
+            alt: 'Angular',
+            width: 50,
+            height: 50
+        },
+        {
+            src: '/typescript.svg',
+            alt: 'TypeScript',
+            width: 40,
+            height: 40
+        },
+        {
+            src: '/javascript.svg',
+            alt: 'JavaScript',
+            width: 40,
+            height: 40
+        },
+        {
+            src: '/next.svg',
+            alt: 'NextJS',
+            width: 40,
+            height: 40
+        },
+        {
+            src: '/react.svg',
+            alt: 'React',
+            width: 40,
+            height: 40
+        },
+        {
+            src: '/java.svg',
+            alt: 'Java',
+            width: 40,
+            height: 40
         },
     ];
     return (

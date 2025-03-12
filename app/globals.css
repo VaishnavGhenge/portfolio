@@ -3,11 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --dark-background-rgb: 15, 15, 15;
-  --dark-text-color-rgb: 237, 237, 237;
+    --dark-background-rgb: 27, 27, 27;
+    --dark-text-color-rgb: 237, 237, 237;
+    --dark-intermidiate-text-color-rgb: 239, 239, 239;
+    --dark-sub-text-color-rgb: 201, 201, 201;
 }
 
 body {
-  background-color: rgb(var(--dark-background-rgb));
-  color: rgb(var(--dark-text-color-rgb));
+    background-color: rgb(var(--dark-background-rgb));
+    color: rgb(var(--dark-text-color-rgb));
+}
+
+.sub-text {
+    color: rgb(var(--dark-sub-text-color-rgb));
+}
+
+.intermediate-text {
+    color: rgb(var(--dark-intermidiate-text-color-rgb));
 }

@@ -1,52 +1,62 @@
+import {IExperience} from "@/types";
+
 export default function Experience() {
-    const expreriences = [
+    const expreriences: IExperience[] = [
         {
             company: "Noovosoft Technologies",
-            from: "Aug 2023",
-            to: "Present",
-            role: "Application Developer",
+            roles: [
+                {
+                    from: "Sep 2023",
+                    to: "Present",
+                    role: "Application Developer",
+                },
+                {
+                    from: "Aug 2023",
+                    to: "Sep 2023",
+                    role: "Application Developer Intern",
+                }
+            ],
             description:
-                "As an Application Developer at Noovosoft, I played a key role in a major project, mastering the interplay of Angular and Django. My responsibilities included full-stack development, collaborating with cross-functional teams, and ensuring a seamless user experience through Angular interfaces. In the backend, I leveraged Django to implement robust solutions and RESTful APIs.",
-            skills: ["Angular", "Django", "TypeScript", "JavaScript", "Python"],
+                "I work as a Full-Stack Developer on farmdesk.eu, a client project undergoing major feature upgrades. My role involves building new features, refining existing functionality, and ensuring seamless development as the platform evolves. I collaborate with cross-functional teams, adapt to changing requirements, and contribute to scaling and optimizing the system. 🚀",
+            skills: ["Python", "Django", "Angular", "TypeScript", "Celery", "Redis", "PostgreSQL", "Docker"],
         },
     ];
 
     return (
-        <div className="mb-16">
-            <h2 className="text-lg font-bold uppercase mb-4">Experience</h2>
-            <div className="group/list">
+        <div className='mb-16'>
+            <h2 className='text-lg font-bold uppercase mb-4'>Experience</h2>
+            <div className='group/list'>
                 <ol>
                     {expreriences.map((experience) => (
                         <li key={experience.company} className='mb-8'>
-                            <div className="group relative transition-all lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
-                                {/* <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-slate-700/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div> */}
-                                <div className="z-10 relative">
-                                    <div className="flex justify-between">
-                                        <div>
-                                            <h3 className="text-lg leading-snug font-medium hover:text-white">
-                                                {experience.role}
-                                            </h3>
-                                            <p className="text-sm text-slate-400">
-                                                {experience.company}
+                            <div
+                                className='group relative transition-all lg:hover:!opacity-100 lg:group-hover/list:opacity-50'>
+                                <div
+                                    className="absolute -inset-x-2 -inset-y-2 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-4 lg:block lg:group-hover:bg-slate-700/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+                                <div className='z-10 relative cursor-default'>
+                                    <h3 className='text-md leading-snug mb-4 font-medium'>
+                                        {experience.company}
+                                    </h3>
+                                    {experience.roles.map((role) => (
+                                        <div key={role.role} className="mb-4">
+                                            <h3 className="text-md font-medium hover:text-white">{role.role}</h3>
+                                            <p className='text-xs sub-text'>
+                                                {role.from} - {role.to}
                                             </p>
                                         </div>
-                                        <div className="text-sm">
-                                            <p className='uppercase'>
-                                                {experience.from} -{" "}
-                                                {experience.to}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <p className="mt-2 text-sm">
+
+                                    ))}
+                                    <p className='sub-text mt-2 text-sm'>
                                         {experience.description}
                                     </p>
-                                    <div className="mt-2 flex flex-wrap">
+                                    <div className='mt-2 flex flex-wrap'>
                                         {experience.skills.map((skill) => (
                                             <div
                                                 key={skill}
-                                                className="mr-1.5 mt-2"
+                                                className='mr-1.5 mt-2'
                                             >
-                                                <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300">
+                                                <div
+                                                    className='flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300'>
                                                     {skill}
                                                 </div>
                                             </div>

@@ -6,10 +6,10 @@ import Projects from '@/components/projects';
 export default function Page() {
     return (
         <div>
-            <About />
-            <Skills />
-            <Experience />
-            <Projects />
+            <About/>
+            <Skills/>
+            <Experience/>
+            <Projects/>
         </div>
     );
 }
