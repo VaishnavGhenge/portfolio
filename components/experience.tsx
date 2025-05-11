@@ -6,13 +6,13 @@ export default function Experience() {
             company: "Noovosoft Technologies",
             roles: [
                 {
-                    from: "Sep 2023",
+                    from: "Sep 2024",
                     to: "Present",
                     role: "Application Developer",
                 },
                 {
                     from: "Aug 2023",
-                    to: "Sep 2023",
+                    to: "Sep 2024",
                     role: "Application Developer Intern",
                 }
             ],
