@@ -7,18 +7,32 @@ import {Analytics} from "@vercel/analytics/react"
 const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
-    title: "Vaishnav Ghenge",
-    description: "Portfolio site for Vaishnav Ghenge",
+    title: "Vaishnav Ghenge - Software Developer",
+    description: "Software Developer at Noovosoft Technologies. Crafting innovative, high-performance applications using TypeScript, Python, Next.js, Django, WebRTC, and modern web technologies.",
     generator: "Next.js",
     applicationName: "Vaishnav Ghenge",
     keywords: ["Vaishnav", "Ghenge", "TypeScript", "Python", "Noovosoft", "Developer", "WebRTC", "WebSocket", "Sinhgad",
-        "Next.js", "React.js", "Django", "Flask", "Node.js"],
-    authors: [{name: "Vaishnav", url: "www.vaishnavghenge.com"}],
+        "Next.js", "React.js", "Django", "Flask", "Node.js", "Software Engineer", "Full Stack Developer"],
+    authors: [{name: "Vaishnav Ghenge", url: "https://www.vaishnavghenge.com"}],
     creator: "Vaishnav Ghenge",
     publisher: "Vaishnav Ghenge",
     icons: {
         icon: "/v.png"
-    }
+    },
+    openGraph: {
+        title: "Vaishnav Ghenge - Software Developer",
+        description: "Software Developer at Noovosoft Technologies. Crafting innovative, high-performance applications.",
+        url: "https://www.vaishnavghenge.com",
+        siteName: "Vaishnav Ghenge",
+        locale: "en_US",
+        type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Vaishnav Ghenge - Software Developer",
+        description: "Software Developer at Noovosoft Technologies. Crafting innovative, high-performance applications.",
+        creator: "@VaishnavGhenge",
+    },
 };
 
 export default function RootLayout({
@@ -41,14 +55,14 @@ export default function RootLayout({
                         </h1>
                         <h2 className='mt-3 text-lg font-medium tracking-tight'>
                                     <span className='mr-1'>
-                                        Application Developer at
+                                        Software Developer at
                                     </span>
                             <a
                                 href='https://www.noovosoft.com/'
                                 target='_blank'
                                 referrerPolicy='no-referrer'
                             >
-                                Noovosoft Technologies
+                                Noovosoft Technologies LLP
                             </a>
                         </h2>
                         <p className='mt-4 max-w-xs leading-normal text-sm'>

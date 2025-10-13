@@ -47,7 +47,7 @@ export default function Projects() {
             <li key={project.title} className='mb-8'>
                 <div className='group relative transition-all lg:hover:!opacity-100 lg:group-hover/list:opacity-50'>
                     <div
-                        className="absolute -inset-x-2 -inset-y-2 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-4 lg:block lg:group-hover:bg-slate-700/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+                        className="absolute -inset-2 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-700/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
                     <div className='z-10 relative cursor-default'>
                         <div className='mt-2'>
                             <a
