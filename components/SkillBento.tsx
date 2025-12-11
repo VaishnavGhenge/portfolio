@@ -76,7 +76,7 @@ function BillingRetryCode() {
             &nbsp;&nbsp;<span className="text-purple-400">except</span> <span className="text-yellow-300">PaymentFailed</span>:<br />
             &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-slate-500"># Auto-recovery workflow</span><br />
             &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-400">if</span> sub.retry_count &lt; 3:<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sub.status = <span className="text-green-300">'RETRYING'</span><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sub.status = <span className="text-green-300">&apos;RETRYING&apos;</span><br />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scheduler.schedule(<br />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;func=retry_charge,<br />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delay=<span className="text-orange-300">exponential_backoff(sub)</span><br />
