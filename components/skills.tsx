@@ -32,7 +32,7 @@ export default function Skills() {
 
     return (
         <div className='mb-16'>
-            <h2 className='text-lg font-bold uppercase mb-6 tracking-widest text-slate-200'>Technical Skills</h2>
+            <h2 className='text-lg font-bold uppercase mb-8 tracking-widest text-slate-200'>Technical Skills</h2>
             <div className='grid gap-8 md:grid-cols-1'>
                 {skillCategories.map((category) => (
                     <div key={category.title}>

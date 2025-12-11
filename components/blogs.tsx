@@ -20,7 +20,7 @@ export default async function Blogs() {
 
     return (
         <div className='mb-16'>
-            <h2 className='text-lg font-bold uppercase mb-4 text-slate-200'>Recent Blog Posts</h2>
+            <h2 className='text-lg font-bold uppercase mb-8 tracking-widest text-slate-200'>Recent Blog Posts</h2>
             <div>
                 <ol>
                     {articles.map((article, index) => (

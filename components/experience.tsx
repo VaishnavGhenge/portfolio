@@ -26,7 +26,7 @@ export default function Experience() {
 
     return (
         <div className='mb-16'>
-            <h2 className='text-lg font-bold uppercase mb-4'>Experience</h2>
+            <h2 className='text-lg font-bold uppercase mb-8 tracking-widest text-slate-200'>Experience</h2>
             <div className='group/list'>
                 <ol>
                     {expreriences.map((experience) => (
