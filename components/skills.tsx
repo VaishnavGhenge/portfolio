@@ -1,74 +1,55 @@
-import Image from 'next/image'
-
 export default function Skills() {
-    const skills = [
+    const skillCategories = [
         {
-            src: '/python.svg',
-            alt: 'Python',
-            width: 40,
-            height: 40
+            title: "Languages",
+            skills: ["Python", "TypeScript", "Go (Golang)", "Java", "C++", "SQL (Postgres)", "SystemVerilog", "Bash"]
         },
         {
-            src: '/django.svg',
-            alt: 'Django',
-            width: 40,
-            height: 40,
+            title: "Backend & Systems",
+            skills: ["Django", "FastAPI", "Express.js", "WebRTC", "WebSocket", "Celery", "SOAP", "REST", "GraphQL", "gRPC"]
         },
         {
-            src: '/angular.png',
-            alt: 'Angular',
-            width: 50,
-            height: 50
+            title: "Cloud & Infrastructure",
+            skills: ["AWS (EC2, S3)", "Docker", "Kubernetes", "Nginx", "Linux Systemd", "CI/CD (GitHub Actions)", "Redis", "Supabase"]
         },
         {
-            src: '/typescript.svg',
-            alt: 'TypeScript',
-            width: 40,
-            height: 40
+            title: "Mobile Engineering",
+            skills: ["React Native", "Expo SDK 54", "MobX", "Android/iOS Native Modules", "Offline-first Architecture"]
         },
         {
-            src: '/javascript.svg',
-            alt: 'JavaScript',
-            width: 40,
-            height: 40
+            title: "Frontend Ecosystem",
+            skills: ["React", "Next.js", "Angular", "RxJS", "Tailwind CSS", "Framer Motion", "HTML5/CSS3"]
         },
         {
-            src: '/next.svg',
-            alt: 'NextJS',
-            width: 40,
-            height: 40
+            title: "Architecture & Design",
+            skills: ["Distributed Systems", "Microservices", "Event-Driven Architecture", "Database Sharding", "System Design", "Concurrency Control"]
         },
         {
-            src: '/react.svg',
-            alt: 'React',
-            width: 40,
-            height: 40
-        },
-        {
-            src: '/java.svg',
-            alt: 'Java',
-            width: 40,
-            height: 40
-        },
+            title: "Developer Tools",
+            skills: ["Git", "Jira", "uv (Python)", "Postman", "VS Code", "IntelliJ IDEA", "Vim"]
+        }
     ];
+
     return (
         <div className='mb-16'>
-            <h2 className='text-lg font-bold uppercase mb-4'>Skills</h2>
-            <div className='flex gap-4 flex-wrap'>
-                {skills.map(skill =>
-                    <div
-                        key={skill.src}
-                        className='bg-white p-1 rounded flex justify-center items-center object-cover w-[50px] h-[50px]'
-                    >
-                        <Image
-                            src={skill.src}
-                            alt={skill.alt}
-                            width={skill.width}
-                            height={skill.height}
-                        />
+            <h2 className='text-lg font-bold uppercase mb-6 tracking-widest text-slate-200'>Technical Skills</h2>
+            <div className='grid gap-8 md:grid-cols-1'>
+                {skillCategories.map((category) => (
+                    <div key={category.title}>
+                        <h3 className='text-sm font-semibold text-slate-400 uppercase mb-3'>{category.title}</h3>
+                        <div className='flex flex-wrap gap-2'>
+                            {category.skills.map((skill) => (
+                                <div
+                                    key={skill}
+                                    className='flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300 hover:bg-teal-400/20 transition-colors cursor-default'
+                                >
+                                    {skill}
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                )}
+                ))}
             </div>
         </div>
-    )
+    );
 }
