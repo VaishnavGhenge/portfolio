@@ -26,12 +26,13 @@ export default function FadeIn({ children, className = "", delay = 0, direction 
             ref={ref}
             initial={{
                 opacity: 0,
+                filter: "blur(8px)",
                 x: directionOffset[direction].x,
                 y: directionOffset[direction].y,
             }}
-            animate={isInView ? { opacity: 1, x: 0, y: 0 } : {}}
+            animate={isInView ? { opacity: 1, filter: "blur(0px)", x: 0, y: 0 } : {}}
             transition={{
-                duration: 0.7,
+                duration: 0.75,
                 delay: delay,
                 ease: [0.21, 0.47, 0.32, 0.98],
             }}

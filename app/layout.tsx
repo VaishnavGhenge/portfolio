@@ -4,6 +4,7 @@ import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react"
 import ResumeWidget from "@/components/ResumeWidget";
+import HeroContent from "@/components/HeroContent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,29 +48,10 @@ export default function RootLayout({
                 <SpeedInsights />
                 <Analytics />
                 <div className='mx-auto min-h-screen max-w-screen-xl px-6 py-12 font-sans md:px-12 md:py-20 lg:px-24 lg:py-0'>
-                    <div className='lg:flex lg:justify-between lg:gap-4'>
+                    <div className='lg:flex lg:justify-between lg:gap-12'>
                         <header
                             className='lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24'>
-                            <div className='mb-16'>
-                                <h1 className='text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl'>
-                                    <a href='/'>Vaishnav Ghenge</a>
-                                </h1>
-                                <h2 className='mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl'>
-                                    <span className='mr-1'>Software Engineer at</span>
-
-                                    <a
-                                        href='https://www.noovosoft.com/'
-                                        target='_blank'
-                                        referrerPolicy='no-referrer'
-                                        className="group-hover:text-teal-300 transition-colors"
-                                    >
-                                        Noovosoft
-                                    </a>
-                                </h2>
-                                <p className='mt-4 max-w-xs leading-relaxed text-slate-400'>
-                                    Building fault-tolerant distributed systems, scalable billing engines, and real-time infrastructure for global SaaS platforms.
-                                </p>
-                            </div>
+                            <HeroContent />
 
                             <ul
                                 className='ml-1 mt-8 flex items-center'

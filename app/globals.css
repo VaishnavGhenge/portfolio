@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-    --dark-background-rgb: 27, 27, 27;
+    --dark-background-rgb: 9, 14, 24;
     --dark-text-color-rgb: 237, 237, 237;
     --dark-intermidiate-text-color-rgb: 239, 239, 239;
     --dark-sub-text-color-rgb: 201, 201, 201;
@@ -11,7 +11,20 @@
 
 body {
     background-color: rgb(var(--dark-background-rgb));
+    background-image: radial-gradient(rgba(148, 163, 184, 0.055) 1px, transparent 1px);
+    background-size: 32px 32px;
     color: rgb(var(--dark-text-color-rgb));
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 55% 45% at 0% 0%, rgba(20, 184, 166, 0.07) 0%, transparent 100%),
+        radial-gradient(ellipse 50% 40% at 100% 100%, rgba(99, 102, 241, 0.07) 0%, transparent 100%);
 }
 
 .sub-text {

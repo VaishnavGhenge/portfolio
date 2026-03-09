@@ -86,6 +86,55 @@ function ServioDeployFlow() {
     );
 }
 
+function DjangoSilkyHighlight() {
+    const queries = [
+        { label: '/api/users/', time: '240ms', width: '85%', color: 'bg-orange-400' },
+        { label: '/api/posts/', time: '38ms', width: '30%', color: 'bg-teal-400' },
+        { label: '/api/tags/', time: '12ms', width: '12%', color: 'bg-teal-500' },
+    ];
+
+    return (
+        <div className="font-mono text-[10px] p-3 w-full">
+            <div className="flex items-center justify-between mb-2.5 pb-2 border-b border-slate-700/50">
+                <span className="text-teal-300 font-bold">django-silky</span>
+                <div className="flex items-center gap-1.5">
+                    <span className="text-slate-500 text-[9px]">dark</span>
+                    <div className="w-7 h-3.5 rounded-full bg-teal-500/40 relative flex items-center px-0.5">
+                        <motion.div
+                            className="w-2.5 h-2.5 rounded-full bg-teal-300 absolute"
+                            animate={{ x: [0, 14, 0] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        />
+                    </div>
+                </div>
+            </div>
+            <div className="space-y-2 mb-2.5">
+                {queries.map((q) => (
+                    <div key={q.label} className="flex items-center gap-2">
+                        <span className="text-slate-500 w-16 truncate shrink-0">{q.label}</span>
+                        <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                            <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: q.width }}
+                                transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
+                                className={`h-full rounded-full ${q.color}`}
+                            />
+                        </div>
+                        <span className="text-slate-400 shrink-0">{q.time}</span>
+                    </div>
+                ))}
+            </div>
+            <motion.div
+                animate={{ opacity: [1, 0.6, 1] }}
+                transition={{ duration: 2.5, repeat: Infinity }}
+                className="inline-flex items-center gap-1 text-[9px] text-orange-400 border border-orange-400/30 px-1.5 py-0.5 rounded bg-orange-400/5"
+            >
+                ⚠ N+1 detected · /api/users/
+            </motion.div>
+        </div>
+    );
+}
+
 
 export default function Projects() {
     const projects = [
@@ -96,7 +145,8 @@ export default function Projects() {
             description:
                 "Architected a scalable Selective Forwarding Unit (SFU) video architecture to support high-quality multi-party calls with minimal bandwidth. Unlike P2P mesh, this central media router efficiently manages streams, decoding once and forwarding to participants. Integrated OpenAI Whisper (C++ optimized) for real-time AI captioning and handled complex signaling via WebSockets in Django.",
             tech: ["Next.js", "Django", "WebRTC (SFU)", "Fast-Whisper", "Redis", "PostgreSQL", "Docker"],
-            highlight: <VartalaapArchitecture />
+            highlight: <VartalaapArchitecture />,
+            engineeringDecision: "Why SFU over P2P mesh? In a mesh, each peer uploads to every other peer — O(n²) bandwidth. SFU routes raw streams through one server — O(n). For any call with more than 3 participants, SFU is the only architecture that scales.",
         },
         {
             title: "Servio",
@@ -105,7 +155,19 @@ export default function Projects() {
             description:
                 "Built a visually rich Web GUI for orchestrating Linux servers, replacing command-line fatigue with a modern dashboard. Directly interfaces with Systemd via D-Bus to start/stop services, view real-time journald logs, and manage environment variables. Includes a Git-integrated deployment pipeline that automatically builds and reloads services on push.",
             tech: ["Go (Golang)", "Linux Systemd", "WebSockets", "React UI", "SQLite", "D-Bus"],
-            highlight: <ServioDeployFlow />
+            highlight: <ServioDeployFlow />,
+            engineeringDecision: "Why Go over Node.js or Python? Needed a single self-contained binary with no runtime dependencies, direct D-Bus bindings for Systemd, and native goroutines for concurrent log streaming across multiple services. Go's stdlib handles all of this without a single external dependency.",
+        },
+        {
+            title: "django-silky",
+            url: "https://github.com/VaishnavGhenge/django-silky",
+            titleExplaination: "Production-Quality Fork of django-silk",
+            badge: "Built in 1 day",
+            description:
+                "Forked the popular django-silk profiling library and shipped a fully modernized version: persistent dark/light theming, inline collapsible filter bar, D3.js analytics dashboards, N+1 query detection with endpoint attribution, and self-hosted icons (zero CDN dependencies). Drop-in replacement — no new migrations required.",
+            tech: ["Python", "Django", "D3.js", "CSS Custom Properties", "PostgreSQL"],
+            highlight: <DjangoSilkyHighlight />,
+            engineeringDecision: "Why fork instead of contributing upstream? The changes required architectural rewrites — CSS variables for theming, D3 for analytics, self-hosted assets. Getting that through upstream review would take weeks. Forking let me ship in one day and write about it.",
         },
     ];
 
@@ -146,6 +208,11 @@ export default function Projects() {
                                                 </span>
                                             </span>
                                         </a>
+                                        {'badge' in project && project.badge && (
+                                            <span className="ml-2 inline-flex items-center text-[10px] font-medium border border-amber-400/30 text-amber-300/80 rounded-full px-2 py-0.5 bg-amber-400/5">
+                                                {project.badge}
+                                            </span>
+                                        )}
                                     </h3>
                                     {project.titleExplaination && (
                                         <div className="text-slate-500 text-sm mb-2 font-medium">{project.titleExplaination}</div>
@@ -153,6 +220,12 @@ export default function Projects() {
                                     <p className="mt-2 text-sm leading-normal text-slate-400">
                                         {project.description}
                                     </p>
+                                    {'engineeringDecision' in project && project.engineeringDecision && (
+                                        <div className="mt-3 border-l-2 border-teal-500/30 pl-3 py-1.5">
+                                            <p className="text-[10px] text-teal-400/60 font-mono uppercase tracking-wider mb-1">Engineering Decision</p>
+                                            <p className="text-xs text-slate-500 leading-relaxed">{project.engineeringDecision}</p>
+                                        </div>
+                                    )}
                                     <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
                                         {project.tech.map((tech) => (
                                             <li key={tech} className="mr-1.5 mt-2">
