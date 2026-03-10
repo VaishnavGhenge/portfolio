@@ -1,10 +1,10 @@
 import About from '@/components/about';
-import Skills from '@/components/skills';
 import Experience from '@/components/experience';
 import Projects from '@/components/projects';
 import Blogs from '@/components/blogs';
 import FadeIn from '@/components/FadeIn';
 import SkillBento from '@/components/SkillBento';
+import SkillGrid from '@/components/SkillGrid';
 
 export default function Page() {
     return (
@@ -18,7 +18,15 @@ export default function Page() {
             </FadeIn>
 
             <FadeIn delay={0.28}>
-                <Skills />
+                <section className="mb-16">
+                    <h2 className="text-lg font-bold uppercase mb-2 tracking-widest text-slate-200">
+                        Technical Skills
+                    </h2>
+                    <p className="text-xs text-slate-600 mb-6 font-mono">
+                        ●●● expert · ●● proficient · ● familiar
+                    </p>
+                    <SkillGrid />
+                </section>
             </FadeIn>
 
             <FadeIn delay={0.3}>
