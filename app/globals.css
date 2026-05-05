@@ -9,6 +9,16 @@
     --dark-sub-text-color-rgb: 201, 201, 201;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
 body {
     background-color: rgb(var(--dark-background-rgb));
     background-image: radial-gradient(rgba(148, 163, 184, 0.055) 1px, transparent 1px);

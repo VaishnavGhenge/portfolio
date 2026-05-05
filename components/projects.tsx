@@ -5,108 +5,122 @@ import ClientTiltCard from './ClientTiltCard';
 
 // ─── Highlight Visuals ────────────────────────────────────────────────────────
 
-function VartalaapArchitecture() {
-    const SFU = { x: 130, y: 52 };
-    const peers = [
-        { id: "A", x: 14,  y: 14,  color: "#60a5fa" },
-        { id: "B", x: 14,  y: 76,  color: "#a78bfa" },
-        { id: "C", x: 218, y: 14,  color: "#4ade80" },
-        { id: "D", x: 218, y: 76,  color: "#fb7185" },
+function VartalaapP2P() {
+    const peerA = { x: 30, y: 48 };
+    const peerB = { x: 198, y: 48 };
+    const midX = 114;
+
+    const features = [
+        { label: "Noise Cancel", color: "#a78bfa", y: 14 },
+        { label: "Echo Cancel",  color: "#60a5fa", y: 50 },
+        { label: "BG Blur",      color: "#2dd4bf", y: 86 },
     ];
 
     return (
         <div className="flex items-center justify-center w-full py-2">
-            <svg width="100%" viewBox="0 0 260 106" fill="none" overflow="visible">
-                {/* Connection lines */}
-                {peers.map(p => (
-                    <line
-                        key={p.id + "-line"}
-                        x1={p.x + 14} y1={p.y + 10}
-                        x2={SFU.x}    y2={SFU.y}
-                        stroke={`${p.color}22`}
-                        strokeWidth="1.5"
-                        strokeDasharray="4 3"
-                    />
-                ))}
+            <svg width="100%" viewBox="0 0 260 108" fill="none" overflow="visible">
+                {/* Direct P2P connection line */}
+                <line
+                    x1={peerA.x + 22} y1={peerA.y}
+                    x2={peerB.x}      y2={peerB.y}
+                    stroke="rgba(148,163,184,0.12)" strokeWidth="1.5" strokeDasharray="4 3"
+                />
 
-                {/* Inbound packets: peer → SFU */}
-                {peers.map((p, i) => (
+                {/* Animated packets A → B */}
+                {[0, 1].map(i => (
                     <motion.circle
-                        key={p.id + "-in"}
-                        cx={p.x + 14} cy={p.y + 10} r={3}
-                        fill={p.color}
+                        key={`ab-${i}`}
+                        cx={peerA.x + 22} cy={peerA.y} r={3}
+                        fill="#60a5fa"
                         animate={{
-                            x: [0, SFU.x - (p.x + 14)],
-                            y: [0, SFU.y - (p.y + 10)],
+                            x: [0, peerB.x - (peerA.x + 22)],
                             opacity: [0, 1, 0.9, 0],
                         }}
                         transition={{
-                            duration: 1.05,
+                            duration: 1.2,
                             repeat: Infinity,
-                            repeatDelay: 1.95,
-                            delay: i * 0.55,
+                            repeatDelay: 1.8,
+                            delay: i * 1.0,
                             ease: "easeInOut",
                         }}
                     />
                 ))}
 
-                {/* Outbound packets: SFU → peer */}
-                {peers.map((p, i) => (
+                {/* Animated packets B → A */}
+                {[0, 1].map(i => (
                     <motion.circle
-                        key={p.id + "-out"}
-                        cx={SFU.x} cy={SFU.y} r={2.5}
-                        fill={p.color} fillOpacity={0.65}
+                        key={`ba-${i}`}
+                        cx={peerB.x} cy={peerB.y} r={3}
+                        fill="#a78bfa"
                         animate={{
-                            x: [0, (p.x + 14) - SFU.x],
-                            y: [0, (p.y + 10) - SFU.y],
-                            opacity: [0, 1, 0.75, 0],
+                            x: [0, (peerA.x + 22) - peerB.x],
+                            opacity: [0, 1, 0.9, 0],
                         }}
                         transition={{
-                            duration: 1.05,
+                            duration: 1.2,
                             repeat: Infinity,
-                            repeatDelay: 1.95,
-                            delay: i * 0.55 + 1.3,
+                            repeatDelay: 1.8,
+                            delay: 0.5 + i * 1.0,
                             ease: "easeInOut",
                         }}
                     />
                 ))}
 
-                {/* Peer nodes */}
-                {peers.map(p => (
-                    <g key={p.id + "-node"}>
-                        <rect x={p.x} y={p.y} width={28} height={20} rx={4}
-                            fill="rgba(15,23,42,0.9)" stroke={`${p.color}45`} strokeWidth="1"
-                        />
-                        <text x={p.x + 14} y={p.y + 13.5} textAnchor="middle"
-                            fill={p.color} fontSize="8" fontFamily="monospace" fontWeight="700"
-                        >{p.id}</text>
-                    </g>
-                ))}
-
-                {/* SFU core */}
-                <rect x={SFU.x - 33} y={SFU.y - 22} width={66} height={44} rx={6}
-                    fill="rgba(9,14,24,0.95)" stroke="rgba(20,184,166,0.55)" strokeWidth="1.5"
+                {/* Peer A */}
+                <rect x={peerA.x - 22} y={peerA.y - 18} width={44} height={36} rx={6}
+                    fill="rgba(15,23,42,0.9)" stroke="rgba(96,165,250,0.4)" strokeWidth="1.2"
                 />
-                <text x={SFU.x} y={SFU.y - 7} textAnchor="middle"
-                    fill="#2dd4bf" fontSize="9.5" fontFamily="monospace" fontWeight="700"
-                >SFU</text>
-                <text x={SFU.x} y={SFU.y + 5} textAnchor="middle"
-                    fill="#334155" fontSize="6.5" fontFamily="monospace"
-                >media router</text>
+                <text x={peerA.x} y={peerA.y - 4} textAnchor="middle"
+                    fill="#60a5fa" fontSize="9" fontFamily="monospace" fontWeight="700"
+                >You</text>
+                <text x={peerA.x} y={peerA.y + 9} textAnchor="middle"
+                    fill="#334155" fontSize="6" fontFamily="monospace"
+                >HD · 1080p</text>
 
-                {/* SFU activity dots */}
-                {[-8, 0, 8].map((off, i) => (
-                    <motion.circle key={i} cx={SFU.x + off} cy={SFU.y + 16} r={1.8}
-                        fill="#2dd4bf"
-                        animate={{ opacity: [0.2, 1, 0.2] }}
-                        transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.35 }}
-                    />
+                {/* Peer B */}
+                <rect x={peerB.x - 22} y={peerB.y - 18} width={44} height={36} rx={6}
+                    fill="rgba(15,23,42,0.9)" stroke="rgba(167,139,250,0.4)" strokeWidth="1.2"
+                />
+                <text x={peerB.x} y={peerB.y - 4} textAnchor="middle"
+                    fill="#a78bfa" fontSize="9" fontFamily="monospace" fontWeight="700"
+                >Them</text>
+                <text x={peerB.x} y={peerB.y + 9} textAnchor="middle"
+                    fill="#334155" fontSize="6" fontFamily="monospace"
+                >HD · 1080p</text>
+
+                {/* Feature pills */}
+                {features.map((f, i) => (
+                    <motion.g key={f.label}
+                        initial={{ opacity: 0, x: -4 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3 + i * 0.2 }}
+                    >
+                        <rect x={midX - 30} y={f.y} width={60} height={12} rx={6}
+                            fill={`${f.color}15`} stroke={`${f.color}35`} strokeWidth="0.8"
+                        />
+                        <motion.circle cx={midX - 20} cy={f.y + 6} r={2}
+                            fill={f.color}
+                            animate={{ opacity: [0.4, 1, 0.4] }}
+                            transition={{ duration: 1.8, repeat: Infinity, delay: i * 0.4 }}
+                        />
+                        <text x={midX - 13} y={f.y + 9} textAnchor="start"
+                            fill={f.color} fontSize="6.5" fontFamily="monospace"
+                        >{f.label}</text>
+                    </motion.g>
                 ))}
 
-                {/* O(n) label */}
-                <text x="130" y="102" textAnchor="middle"
-                    fill="rgba(71,85,105,0.65)" fontSize="7" fontFamily="monospace"
-                >O(n) routing · not O(n²) mesh</text>
+                {/* Screen share badge */}
+                <motion.g
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 2.5, repeat: Infinity }}
+                >
+                    <rect x={midX - 22} y={99} width={44} height={10} rx={5}
+                        fill="rgba(45,212,191,0.08)" stroke="rgba(45,212,191,0.25)" strokeWidth="0.8"
+                    />
+                    <text x={midX} y={107} textAnchor="middle"
+                        fill="#2dd4bf" fontSize="6" fontFamily="monospace"
+                    >screen share</text>
+                </motion.g>
             </svg>
         </div>
     );
@@ -275,12 +289,12 @@ export default function Projects() {
         {
             title: "Vartalaap",
             url: "https://vartalaap.vaishnavghenge.com/",
-            titleExplaination: "Scalable SFU Video Conferencing Platform",
+            titleExplaination: "HD Video Calling with Real-Time Media Processing",
             description:
-                "Architected a scalable Selective Forwarding Unit (SFU) video architecture to support high-quality multi-party calls with minimal bandwidth. Unlike P2P mesh, this central media router efficiently manages streams, decoding once and forwarding to participants. Integrated OpenAI Whisper (C++ optimized) for real-time AI captioning and handled complex signaling via WebSockets in Django.",
-            tech: ["Next.js", "Django", "WebRTC (SFU)", "Fast-Whisper", "Redis", "PostgreSQL", "Docker"],
-            highlight: <VartalaapArchitecture />,
-            engineeringDecision: "Why SFU over P2P mesh? In a mesh, each peer uploads to every other peer — O(n²) bandwidth. SFU routes raw streams through one server — O(n). For any call with more than 3 participants, SFU is the only architecture that scales.",
+                "Built a high-quality P2P video call app focused on call reliability and media fidelity. Features HD 1080p video, background blur and virtual backgrounds via MediaPipe, screen sharing, acoustic echo cancellation, and background noise suppression — tackling the exact frustrations people have with mainstream video apps. Signaling handled by a lightweight Go WebSocket server with zero dependencies.",
+            tech: ["Next.js", "Go", "WebRTC", "MediaPipe", "simple-peer", "WebSockets", "Zustand"],
+            highlight: <VartalaapP2P />,
+            engineeringDecision: "Why Go for signaling? Needed a single self-contained binary that handles concurrent WebSocket connections without a runtime or framework. Go's stdlib covers it entirely — no Node, no Python, no external dependencies on the critical signaling path.",
         },
         {
             title: "Servio",
@@ -294,9 +308,8 @@ export default function Projects() {
         },
         {
             title: "django-silky",
-            url: "https://github.com/VaishnavGhenge/django-silky",
+            url: "https://pypi.org/project/django-silky/",
             titleExplaination: "Production-Quality Fork of django-silk",
-            badge: "Built in 1 day",
             description:
                 "Forked the popular django-silk profiling library and shipped a fully modernized version: persistent dark/light theming, inline collapsible filter bar, D3.js analytics dashboards, N+1 query detection with endpoint attribution, and self-hosted icons (zero CDN dependencies). Drop-in replacement — no new migrations required.",
             tech: ["Python", "Django", "D3.js", "CSS Custom Properties", "PostgreSQL"],
