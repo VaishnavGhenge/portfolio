@@ -44,7 +44,7 @@ export default function Page() {
 
             <hr className="border-stone-200" />
 
-            <section>
+            <section id="editorial">
                 <EditorialCartoon />
             </section>
         </div>

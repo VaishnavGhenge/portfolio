@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react"
 import HeroContent from "@/components/HeroContent";
 import Footer from "@/components/Footer";
+import SectionNav from "@/components/SectionNav";
 
 const inter = Inter({ subsets: ["latin"] });
 const playfair = Playfair_Display({
@@ -47,9 +48,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <SpeedInsights />
                 <Analytics />
                 <div className="mx-auto max-w-2xl px-6 py-16 lg:py-24">
-                    <header className="mb-20">
+                    <header className="mb-12">
                         <HeroContent />
                     </header>
+                    <SectionNav />
                     <main>
                         {children}
                     </main>

@@ -20,9 +20,14 @@ export default function EditorialCartoon() {
 
     return (
         <div className="mb-16">
-            <p className="text-[10px] font-mono uppercase tracking-widest text-stone-400 mb-3 text-center">
-                - Editorial -
-            </p>
+            <div className="mb-5 text-center">
+                <p className="text-[10px] font-mono uppercase tracking-widest text-stone-400 mb-2">
+                    - Editorial -
+                </p>
+                <h2 className="font-serif text-xl font-bold tracking-tight text-stone-900">
+                    Consequences Engineer
+                </h2>
+            </div>
 
             <div className="border-2 border-stone-900 mx-auto bg-white" style={{ maxWidth: 520 }}>
                 <svg
@@ -34,7 +39,7 @@ export default function EditorialCartoon() {
                     aria-labelledby="editorial-cartoon-title"
                 >
                     <title id="editorial-cartoon-title">
-                        Editorial cartoon: an AI coding agent declares a feature done while a developer inherits the review queue, CI failures, security warnings, and product pressure.
+                        Editorial cartoon: an AI coding agent says it passed imaginary tests while a developer inherits review, CI failures, security warnings, and product pressure.
                     </title>
                     <defs>
                         <pattern id="cartoon-hatch" width="8" height="8" patternUnits="userSpaceOnUse">
@@ -102,10 +107,10 @@ export default function EditorialCartoon() {
                             strokeWidth="2"
                         />
                         <text x="313" y="51" fontFamily="Georgia, serif" fontSize="14" fill="#1c1917">
-                            I opened 9 PRs.
+                            I passed the tests
                         </text>
                         <text x="313" y="73" fontFamily="Georgia, serif" fontSize="14" fill="#1c1917">
-                            This is velocity.
+                            I imagined.
                         </text>
                     </g>
 
@@ -171,10 +176,10 @@ export default function EditorialCartoon() {
                             strokeWidth="2"
                         />
                         <text x="44" y="219" fontFamily="Georgia, serif" fontSize="14" fill="#1c1917">
-                            Cool. I will just
+                            Great. I will run
                         </text>
                         <text x="44" y="240" fontFamily="Georgia, serif" fontSize="14" fill="#1c1917">
-                            review the blast radius.
+                            the real ones.
                         </text>
                     </g>
 
@@ -187,7 +192,7 @@ export default function EditorialCartoon() {
 
                 <div className="border-t-2 border-stone-900 px-5 py-3 bg-white">
                     <p className="text-sm text-center text-stone-700" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>
-                        &quot;The AI finished the feature. Now the developer just has to finish the consequences.&quot;
+                        &quot;The AI wrote the code. I got promoted to consequences engineer.&quot;
                     </p>
                 </div>
             </div>
