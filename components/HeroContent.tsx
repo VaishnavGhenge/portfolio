@@ -1,165 +1,64 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import ImpactMetrics from "./ImpactMetrics";
-
-const ease = [0.22, 1, 0.36, 1] as const;
-const sectionLinks = [
-    { id: "about", label: "About" },
-    { id: "skills", label: "Skills" },
-    { id: "experience", label: "Experience" },
-    { id: "projects", label: "Projects" },
-    { id: "blogs", label: "Writing" },
-] as const;
+import ResumeWidget from "./ResumeWidget";
 
 export default function HeroContent() {
-    const [activeSection, setActiveSection] = useState<string>(sectionLinks[0].id);
-
-    useEffect(() => {
-        const sections = sectionLinks
-            .map(({ id }) => document.getElementById(id))
-            .filter((section): section is HTMLElement => section instanceof HTMLElement);
-
-        if (sections.length === 0) {
-            return;
-        }
-
-        const syncActiveSectionFromHash = () => {
-            const hash = window.location.hash.slice(1);
-
-            if (hash && sectionLinks.some((section) => section.id === hash)) {
-                setActiveSection(hash);
-            }
-        };
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visibleEntries = entries
-                    .filter((entry) => entry.isIntersecting)
-                    .sort((left, right) => right.intersectionRatio - left.intersectionRatio);
-
-                const currentSection = visibleEntries[0]?.target.id;
-
-                if (currentSection) {
-                    setActiveSection(currentSection);
-                }
-            },
-            {
-                rootMargin: "-30% 0px -45% 0px",
-                threshold: [0.15, 0.35, 0.55, 0.75],
-            }
-        );
-
-        sections.forEach((section) => observer.observe(section));
-        syncActiveSectionFromHash();
-        window.addEventListener("hashchange", syncActiveSectionFromHash);
-
-        return () => {
-            observer.disconnect();
-            window.removeEventListener("hashchange", syncActiveSectionFromHash);
-        };
-    }, []);
-
     return (
-        <div className="mb-16">
-            {/* Name — clip reveal from bottom */}
-            <div style={{ overflow: "hidden" }}>
-                <motion.h1
-                    initial={{ y: "105%" }}
-                    animate={{ y: "0%" }}
-                    transition={{ duration: 0.9, ease }}
-                    className="text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl"
-                >
-                    <a href="/">Vaishnav Ghenge</a>
-                </motion.h1>
-            </div>
+        <div>
+            <h1 className="font-serif text-5xl font-bold tracking-tight text-stone-900 sm:text-6xl leading-tight">
+                Vaishnav Ghenge
+            </h1>
 
-            {/* Subtitle — slide from left */}
-            <motion.h2
-                initial={{ opacity: 0, x: -18 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.7, delay: 0.2, ease }}
-                className="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl"
-            >
-                Software Engineer · Distributed Systems
-            </motion.h2>
+            <div className="mt-3 h-px bg-stone-300" />
 
-            {/* Tagline — fade up */}
-            <motion.p
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.35, ease }}
-                className="mt-4 max-w-xs leading-relaxed text-slate-400"
-            >
-                I build things that scale — SFU video infrastructure, billing engines
-                that don&apos;t fail, open source dev tools. Currently at{" "}
+            <p className="mt-3 text-sm font-medium uppercase tracking-widest text-stone-500">
+                Software Engineer · Backend &amp; Distributed Systems
+            </p>
+
+            <p className="mt-5 text-sm leading-relaxed text-stone-600 max-w-lg">
+                3 years building production systems at{" "}
                 <a
                     href="https://www.noovosoft.com/"
                     target="_blank"
-                    referrerPolicy="no-referrer"
-                    className="text-slate-300 hover:text-teal-300 transition-colors"
+                    rel="noreferrer"
+                    className="text-stone-900 underline underline-offset-2 hover:text-amber-800 transition-colors"
                 >
                     Noovosoft Technologies
                 </a>
-                , Pune.
-            </motion.p>
+                {" "}— billing engines, real-time data pipelines, WebRTC video infrastructure.
+                I care about correctness, reliability, and code that doesn&apos;t need explaining.
+            </p>
 
-            {/* Metrics — scale in */}
-            <motion.div
-                initial={{ opacity: 0, scale: 0.94, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5, ease }}
-                className="max-w-xs"
-            >
-                <ImpactMetrics />
-            </motion.div>
+            <div className="mt-6 flex items-center gap-5">
+                <span className="flex items-center gap-1.5 text-xs text-stone-500">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
+                    Open to work
+                </span>
 
-            {/* Open to work badge — pop in */}
-            <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.7, type: "spring", stiffness: 200, damping: 18 }}
-                className="mt-4 flex items-center gap-2"
-            >
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-                <span className="text-xs text-slate-500">Open to new opportunities</span>
-            </motion.div>
-
-            <motion.nav
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.55, delay: 0.8, ease }}
-                className="mt-10 hidden lg:block"
-                aria-label="Section navigation"
-            >
-                <ul className="space-y-3">
-                    {sectionLinks.map((section) => {
-                        const isActive = section.id === activeSection;
-
-                        return (
-                            <li key={section.id}>
-                                <a
-                                    href={`#${section.id}`}
-                                    className={`group inline-flex items-center gap-4 text-[11px] font-semibold uppercase tracking-[0.32em] transition-colors ${
-                                        isActive ? "text-teal-300" : "text-slate-500 hover:text-slate-200"
-                                    }`}
-                                >
-                                    <span
-                                        className={`h-px transition-all duration-300 ${
-                                            isActive
-                                                ? "w-14 bg-teal-300"
-                                                : "w-8 bg-slate-700 group-hover:w-12 group-hover:bg-slate-300"
-                                        }`}
-                                        aria-hidden="true"
-                                    />
-                                    <span>{section.label}</span>
-                                </a>
-                            </li>
-                        );
-                    })}
-                </ul>
-            </motion.nav>
+                <div className="flex items-center gap-4 text-stone-400">
+                    <a href="https://github.com/VaishnavGhenge" target="_blank" rel="noreferrer" aria-label="GitHub" className="hover:text-stone-900 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-5 w-5" aria-hidden="true">
+                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/vaishnavghenge/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="hover:text-stone-900 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5" aria-hidden="true">
+                            <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z" />
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com/VaishnavGhenge" target="_blank" rel="noreferrer" aria-label="X / Twitter" className="hover:text-stone-900 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+                            <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" />
+                        </svg>
+                    </a>
+                    <a href="https://leetcode.com/vaishnavghenge/" target="_blank" rel="noreferrer" aria-label="LeetCode" className="hover:text-stone-900 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5" aria-hidden="true">
+                            <path d="M16.102 17.93l-2.697 2.607c-.466.467-1.111.662-1.823.662s-1.357-.195-1.824-.662l-4.332-4.363c-.467-.467-.702-1.15-.702-1.863s.235-1.357.702-1.824l4.319-4.38c.467-.467 1.125-.645 1.837-.645s1.357.195 1.823.662l2.697 2.606c.514.515 1.365.497 1.9-.038.535-.536.553-1.387.039-1.901l-2.609-2.636a5.055 5.055 0 0 0-2.445-1.337l2.467-2.503c.516-.514.498-1.366-.037-1.901-.535-.535-1.387-.552-1.902-.038l-10.1 10.101c-.981.982-1.494 2.337-1.494 3.835 0 1.498.513 2.895 1.494 3.875l4.347 4.361c.981.979 2.337 1.452 3.834 1.452s2.853-.512 3.835-1.494l2.609-2.637c.514-.514.496-1.365-.039-1.9s-1.386-.553-1.899-.039zM20.811 13.01H10.666c-.702 0-1.27.604-1.27 1.346s.568 1.346 1.27 1.346h10.145c.701 0 1.27-.604 1.27-1.346s-.569-1.346-1.27-1.346z" />
+                        </svg>
+                    </a>
+                    <ResumeWidget />
+                </div>
+            </div>
         </div>
     );
 }

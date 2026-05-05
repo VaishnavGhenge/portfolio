@@ -1,17 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 type Category = "backend" | "frontend" | "infra" | "systems" | "language";
 type Ring     = "expert" | "proficient" | "familiar";
 
 const categoryColors: Record<Category, string> = {
-    backend:  "#2dd4bf",
-    frontend: "#60a5fa",
-    infra:    "#a78bfa",
-    systems:  "#fb7185",
-    language: "#fbbf24",
+    backend:  "#0d9488",
+    frontend: "#2563eb",
+    infra:    "#7c3aed",
+    systems:  "#e11d48",
+    language: "#b45309",
 };
 
 const categoryLabels: Record<Category, string> = {
@@ -30,7 +29,7 @@ const skills: Skill[] = [
     { id: "django",      name: "Django",       category: "backend",  ring: "expert",     detail: "3+ yrs · REST, WebSockets, ORM, admin" },
     { id: "react",       name: "React",        category: "frontend", ring: "expert",     detail: "3+ yrs · Next.js, Framer Motion, RSC" },
     { id: "postgresql",  name: "PostgreSQL",   category: "infra",    ring: "expert",     detail: "3+ yrs · Query plans, indexing, joins" },
-    { id: "webrtc",      name: "WebRTC",       category: "systems",  ring: "expert",     detail: "2 yrs · SFU architecture, signaling, ICE" },
+    { id: "webrtc",      name: "WebRTC",       category: "systems",  ring: "expert",     detail: "2 yrs · P2P, signaling, ICE, MediaPipe" },
     { id: "go",          name: "Go",           category: "language", ring: "proficient", detail: "1+ yr · goroutines, stdlib, D-Bus" },
     { id: "nextjs",      name: "Next.js",      category: "frontend", ring: "proficient", detail: "2+ yrs · RSC, SSR, edge, App Router" },
     { id: "docker",      name: "Docker",       category: "infra",    ring: "proficient", detail: "3+ yrs · Compose, multi-stage builds" },
@@ -53,7 +52,7 @@ const skills: Skill[] = [
 
 const CAT_ORDER: Category[] = ["backend", "frontend", "infra", "systems", "language"];
 
-const ringOpacity: Record<Ring, number>  = { expert: 1, proficient: 0.72, familiar: 0.45 };
+const ringOpacity: Record<Ring, number> = { expert: 1, proficient: 0.72, familiar: 0.45 };
 const ringDots:    Record<Ring, string>  = { expert: "●●●", proficient: "●●", familiar: "●" };
 
 export default function SkillGrid() {
@@ -61,19 +60,12 @@ export default function SkillGrid() {
 
     return (
         <div className="space-y-5">
-            {CAT_ORDER.map((cat, ci) => {
+            {CAT_ORDER.map((cat) => {
                 const catSkills = skills.filter(s => s.category === cat);
                 const color     = categoryColors[cat];
 
                 return (
-                    <motion.div
-                        key={cat}
-                        initial={{ opacity: 0, y: 14, filter: "blur(4px)" }}
-                        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                        viewport={{ once: true, margin: "-40px" }}
-                        transition={{ duration: 0.5, delay: ci * 0.07, ease: [0.21, 0.47, 0.32, 0.98] }}
-                    >
-                        {/* Category label + rule */}
+                    <div key={cat}>
                         <div className="flex items-center gap-3 mb-2.5">
                             <span
                                 className="text-[9px] font-mono uppercase tracking-widest shrink-0"
@@ -84,30 +76,21 @@ export default function SkillGrid() {
                             <div className="flex-1 h-px" style={{ backgroundColor: `${color}18` }} />
                         </div>
 
-                        {/* Skill badges */}
                         <div className="flex flex-wrap gap-1.5">
-                            {catSkills.map((skill, si) => {
+                            {catSkills.map((skill) => {
                                 const isHov = hovered === skill.id;
 
                                 return (
                                     <div key={skill.id} className="relative">
-                                        <motion.button
-                                            initial={{ opacity: 0, scale: 0.85 }}
-                                            whileInView={{ opacity: ringOpacity[skill.ring], scale: 1 }}
-                                            viewport={{ once: true }}
-                                            transition={{ duration: 0.2, delay: ci * 0.07 + si * 0.03 }}
-                                            animate={{ opacity: isHov ? 1 : ringOpacity[skill.ring] }}
-                                            onHoverStart={() => setHovered(skill.id)}
-                                            onHoverEnd={() => setHovered(null)}
-                                            className="flex items-center gap-1.5 px-2.5 py-1 rounded border text-[11px] font-mono"
+                                        <button
+                                            onMouseEnter={() => setHovered(skill.id)}
+                                            onMouseLeave={() => setHovered(null)}
+                                            className="flex items-center gap-1.5 px-2.5 py-1 rounded border text-[11px] font-mono transition-colors duration-150"
                                             style={{
                                                 borderColor:     isHov ? `${color}55` : `${color}22`,
                                                 backgroundColor: isHov ? `${color}12` : `${color}07`,
                                                 color:           isHov ? color : `${color}cc`,
-                                                boxShadow:       isHov && skill.ring === "expert"
-                                                    ? `0 0 14px ${color}28`
-                                                    : "none",
-                                                transition: "border-color 0.15s, background-color 0.15s, box-shadow 0.15s",
+                                                opacity:         isHov ? 1 : ringOpacity[skill.ring],
                                             }}
                                         >
                                             {skill.name}
@@ -117,53 +100,46 @@ export default function SkillGrid() {
                                             >
                                                 {ringDots[skill.ring]}
                                             </span>
-                                        </motion.button>
+                                        </button>
 
-                                        {/* Tooltip */}
-                                        <AnimatePresence>
-                                            {isHov && (
-                                                <motion.div
-                                                    initial={{ opacity: 0, y: 5, scale: 0.95 }}
-                                                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                                                    exit={{ opacity: 0, y: 5, scale: 0.95 }}
-                                                    transition={{ duration: 0.12 }}
-                                                    className="absolute bottom-full mb-2 left-0 z-50 pointer-events-none"
-                                                    style={{ minWidth: 180 }}
+                                        {isHov && (
+                                            <div
+                                                className="absolute bottom-full mb-2 left-0 z-50 pointer-events-none"
+                                                style={{ minWidth: 180 }}
+                                            >
+                                                <div
+                                                    className="rounded border p-2.5"
+                                                    style={{
+                                                        backgroundColor: "#ffffff",
+                                                        borderColor:     "#e7e5e4",
+                                                        boxShadow:       "0 4px 16px rgba(0,0,0,0.08)",
+                                                    }}
                                                 >
-                                                    <div
-                                                        className="rounded-lg border p-2.5 backdrop-blur-sm"
-                                                        style={{
-                                                            backgroundColor: "rgba(9,14,24,0.97)",
-                                                            borderColor:     `${color}25`,
-                                                            boxShadow:       `0 8px 24px rgba(0,0,0,0.5), 0 0 0 1px ${color}0d`,
-                                                        }}
-                                                    >
-                                                        <div className="flex items-center gap-1.5 mb-1.5">
-                                                            <span
-                                                                className="text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded"
-                                                                style={{ backgroundColor: `${color}15`, color }}
-                                                            >
-                                                                {categoryLabels[cat]}
-                                                            </span>
-                                                            <span
-                                                                className="text-[9px] font-mono px-1.5 py-0.5 rounded"
-                                                                style={{ backgroundColor: "rgba(148,163,184,0.08)", color: "rgb(100,116,139)" }}
-                                                            >
-                                                                {skill.ring}
-                                                            </span>
-                                                        </div>
-                                                        <p className="text-[10px] text-slate-400 leading-relaxed">
-                                                            {skill.detail}
-                                                        </p>
+                                                    <div className="flex items-center gap-1.5 mb-1.5">
+                                                        <span
+                                                            className="text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded"
+                                                            style={{ backgroundColor: `${color}15`, color }}
+                                                        >
+                                                            {categoryLabels[cat]}
+                                                        </span>
+                                                        <span
+                                                            className="text-[9px] font-mono px-1.5 py-0.5 rounded"
+                                                            style={{ backgroundColor: "rgba(0,0,0,0.04)", color: "rgb(120,113,108)" }}
+                                                        >
+                                                            {skill.ring}
+                                                        </span>
                                                     </div>
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
+                                                    <p className="text-[10px] text-stone-600 leading-relaxed">
+                                                        {skill.detail}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             })}
                         </div>
-                    </motion.div>
+                    </div>
                 );
             })}
         </div>

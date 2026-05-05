@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import ClientTiltCard from './ClientTiltCard';
 
 // ─── Highlight Visuals ────────────────────────────────────────────────────────
 
@@ -137,11 +136,11 @@ function ServioDeployFlow() {
     return (
         <div className="font-mono text-[10px] p-3 w-full">
             {/* Terminal chrome */}
-            <div className="flex items-center gap-1.5 mb-2.5 pb-2 border-b border-slate-700/40">
+            <div className="flex items-center gap-1.5 mb-2.5 pb-2 border-b border-stone-700/40">
                 <div className="w-2 h-2 rounded-full bg-red-400/60" />
                 <div className="w-2 h-2 rounded-full bg-amber-400/60" />
                 <div className="w-2 h-2 rounded-full bg-green-400/60" />
-                <span className="ml-1.5 text-slate-600 text-[9px]">servio — journald</span>
+                <span className="ml-1.5 text-stone-600 text-[9px]">servio — journald</span>
                 <motion.div
                     className="ml-auto w-1.5 h-1.5 rounded-full bg-green-400"
                     animate={{ opacity: [1, 0.3, 1] }}
@@ -164,21 +163,21 @@ function ServioDeployFlow() {
                 ))}
                 {/* Blinking cursor */}
                 <motion.span
-                    className="text-slate-500"
+                    className="text-stone-500"
                     animate={{ opacity: [1, 0, 1] }}
                     transition={{ duration: 1.1, repeat: Infinity }}
                 >▋</motion.span>
             </div>
 
             {/* CPU / MEM bars */}
-            <div className="space-y-1.5 pt-2 border-t border-slate-800/60">
+            <div className="space-y-1.5 pt-2 border-t border-stone-800/60">
                 {[
                     { label: "CPU", color: "#a78bfa", values: ["8%", "22%", "11%", "19%", "8%"] },
                     { label: "MEM", color: "#60a5fa", values: ["34%", "38%", "36%", "40%", "34%"] },
                 ].map(bar => (
                     <div key={bar.label} className="flex items-center gap-2">
-                        <span className="text-slate-600 w-6 shrink-0">{bar.label}</span>
-                        <div className="flex-1 h-1 bg-slate-800 rounded-full overflow-hidden">
+                        <span className="text-stone-600 w-6 shrink-0">{bar.label}</span>
+                        <div className="flex-1 h-1 bg-stone-800 rounded-full overflow-hidden">
                             <motion.div
                                 className="h-full rounded-full"
                                 style={{ backgroundColor: bar.color + "99" }}
@@ -208,13 +207,13 @@ function DjangoSilkyHighlight() {
 
     return (
         <div className="font-mono text-[10px] p-3 w-full">
-            <div className="flex items-center justify-between mb-2 pb-2 border-b border-slate-700/50">
-                <span className="text-teal-300 font-bold">django-silky</span>
+            <div className="flex items-center justify-between mb-2 pb-2 border-b border-stone-700/50">
+                <span className="text-amber-400 font-bold">django-silky</span>
                 <div className="flex items-center gap-1.5">
-                    <span className="text-slate-500 text-[9px]">dark</span>
-                    <div className="w-7 h-3.5 rounded-full bg-teal-500/30 relative flex items-center px-0.5">
+                    <span className="text-stone-500 text-[9px]">dark</span>
+                    <div className="w-7 h-3.5 rounded-full bg-amber-500/30 relative flex items-center px-0.5">
                         <motion.div
-                            className="w-2.5 h-2.5 rounded-full bg-teal-300 absolute"
+                            className="w-2.5 h-2.5 rounded-full bg-amber-400 absolute"
                             animate={{ x: [0, 14, 0] }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                         />
@@ -226,8 +225,8 @@ function DjangoSilkyHighlight() {
             <div className="space-y-1.5 mb-2.5">
                 {queries.map((q, i) => (
                     <div key={q.label} className="flex items-center gap-2">
-                        <span className="text-slate-500 w-16 truncate shrink-0">{q.label}</span>
-                        <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                        <span className="text-stone-500 w-16 truncate shrink-0">{q.label}</span>
+                        <div className="flex-1 h-1.5 bg-stone-800 rounded-full overflow-hidden">
                             <motion.div
                                 initial={{ width: 0 }}
                                 animate={{ width: `${q.pct}%` }}
@@ -236,13 +235,13 @@ function DjangoSilkyHighlight() {
                                 className="h-full rounded-full"
                             />
                         </div>
-                        <span className="text-slate-400 shrink-0 w-10 text-right">{q.time}</span>
+                        <span className="text-stone-400 shrink-0 w-10 text-right">{q.time}</span>
                     </div>
                 ))}
             </div>
 
             {/* Flame chart */}
-            <div className="text-[9px] text-slate-600 mb-1">flame · /api/users/</div>
+            <div className="text-[9px] text-stone-600 mb-1">flame · /api/users/</div>
             <div className="flex h-3.5 gap-px mb-2.5 overflow-hidden rounded-sm">
                 {flame.map((seg, i) => (
                     <motion.div
@@ -274,13 +273,6 @@ function DjangoSilkyHighlight() {
         </div>
     );
 }
-
-// ─── Card entrance variant ────────────────────────────────────────────────────
-
-const cardVariant = {
-    hidden: { opacity: 0, y: 28, filter: "blur(6px)" },
-    show:   { opacity: 1, y: 0,  filter: "blur(0px)" },
-};
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -320,117 +312,69 @@ export default function Projects() {
 
     return (
         <div className="mb-16">
-            <h2 className="text-lg font-bold uppercase mb-8 tracking-widest text-slate-200">
+            <h2 className="font-serif text-lg font-bold uppercase mb-8 tracking-widest text-stone-900">
                 Featured Projects
             </h2>
-            <ol className="group/list">
-                {projects.map((project, index) => (
-                    <motion.li
-                        key={project.title}
-                        className="mb-12"
-                        variants={cardVariant}
-                        initial="hidden"
-                        whileInView="show"
-                        viewport={{ once: true, margin: "-60px" }}
-                        transition={{
-                            duration: 0.65,
-                            delay: index * 0.1,
-                            ease: [0.21, 0.47, 0.32, 0.98],
-                        }}
-                    >
-                        <ClientTiltCard>
-                            <div className="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
-                                <div className="absolute -inset-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg" />
-
-                                {/* Highlight panel */}
-                                <div className="z-10 sm:col-span-3 sm:order-2">
-                                    <motion.div
-                                        className="rounded border-2 border-slate-200/10 bg-slate-900/50 h-full flex flex-col justify-center overflow-hidden"
-                                        whileHover={{ borderColor: "rgba(148,163,184,0.25)" }}
-                                        transition={{ duration: 0.2 }}
-                                    >
-                                        {project.highlight}
-                                        <div className="bg-slate-950/50 p-2 text-center border-t border-slate-800/50">
-                                            <p className="text-[10px] text-slate-500 font-mono uppercase tracking-wider">
-                                                Technical Highlight
-                                            </p>
-                                        </div>
-                                    </motion.div>
-                                </div>
-
-                                {/* Content */}
-                                <div className="z-10 sm:col-span-5 sm:order-1">
-                                    <h3 className="font-medium leading-snug text-slate-200">
-                                        <a
-                                            href={project.url}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className="inline-flex items-baseline font-medium leading-tight text-slate-200 hover:text-teal-300 focus-visible:text-teal-300 group/link text-base"
-                                        >
-                                            <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
-                                            <span>
-                                                {project.title}
-                                                <span className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 motion-reduce:transition-none ml-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className="h-4 w-4">
-                                                        <path fillRule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clipRule="evenodd" />
-                                                    </svg>
-                                                </span>
-                                            </span>
-                                        </a>
-                                        {'badge' in project && project.badge && (
-                                            <span className="ml-2 inline-flex items-center text-[10px] font-medium border border-amber-400/30 text-amber-300/80 rounded-full px-2 py-0.5 bg-amber-400/5">
-                                                {project.badge}
-                                            </span>
-                                        )}
-                                    </h3>
-
-                                    {project.titleExplaination && (
-                                        <div className="text-slate-500 text-sm mb-2 font-medium">
-                                            {project.titleExplaination}
-                                        </div>
-                                    )}
-
-                                    <p className="mt-2 text-sm leading-normal text-slate-400">
-                                        {project.description}
-                                    </p>
-
-                                    {'engineeringDecision' in project && project.engineeringDecision && (
-                                        <motion.div
-                                            className="mt-3 border-l-2 border-teal-500/30 pl-3 py-1.5"
-                                            initial={{ opacity: 0, x: -6 }}
-                                            whileInView={{ opacity: 1, x: 0 }}
-                                            viewport={{ once: true }}
-                                            transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
-                                        >
-                                            <p className="text-[10px] text-teal-400/60 font-mono uppercase tracking-wider mb-1">
-                                                Engineering Decision
-                                            </p>
-                                            <p className="text-xs text-slate-500 leading-relaxed">
-                                                {project.engineeringDecision}
-                                            </p>
-                                        </motion.div>
-                                    )}
-
-                                    <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
-                                        {project.tech.map((tech, ti) => (
-                                            <motion.li
-                                                key={tech}
-                                                className="mr-1.5 mt-2"
-                                                initial={{ opacity: 0, scale: 0.8 }}
-                                                whileInView={{ opacity: 1, scale: 1 }}
-                                                viewport={{ once: true }}
-                                                transition={{ duration: 0.25, delay: index * 0.1 + 0.2 + ti * 0.05 }}
-                                            >
-                                                <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300">
-                                                    {tech}
-                                                </div>
-                                            </motion.li>
-                                        ))}
-                                    </ul>
+            <ol className="space-y-12">
+                {projects.map((project) => (
+                    <li key={project.title}>
+                        <div className="grid gap-6 sm:grid-cols-8">
+                            {/* Dark terminal panel — intentional contrast on light page */}
+                            <div className="sm:col-span-3 sm:order-2">
+                                <div className="rounded border border-stone-800 bg-stone-900 h-full flex flex-col justify-center overflow-hidden">
+                                    {project.highlight}
+                                    <div className="bg-black/30 p-2 text-center border-t border-stone-800">
+                                        <p className="text-[10px] text-stone-500 font-mono uppercase tracking-wider">
+                                            Technical Highlight
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </ClientTiltCard>
-                    </motion.li>
+
+                            {/* Content */}
+                            <div className="sm:col-span-5 sm:order-1">
+                                <h3 className="font-serif font-bold text-stone-900">
+                                    <a
+                                        href={project.url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="hover:text-amber-800 underline underline-offset-2 decoration-stone-300 hover:decoration-amber-800 transition-colors"
+                                    >
+                                        {project.title} ↗
+                                    </a>
+                                </h3>
+
+                                {project.titleExplaination && (
+                                    <p className="text-xs text-stone-500 mt-1 mb-3 font-medium uppercase tracking-wide">
+                                        {project.titleExplaination}
+                                    </p>
+                                )}
+
+                                <p className="text-sm leading-relaxed text-stone-600">
+                                    {project.description}
+                                </p>
+
+                                {'engineeringDecision' in project && project.engineeringDecision && (
+                                    <div className="mt-3 border-l-2 border-stone-300 pl-3 py-1">
+                                        <p className="text-[10px] text-stone-400 font-mono uppercase tracking-wider mb-1">
+                                            Engineering Decision
+                                        </p>
+                                        <p className="text-xs text-stone-500 leading-relaxed">
+                                            {project.engineeringDecision}
+                                        </p>
+                                    </div>
+                                )}
+
+                                <div className="mt-3 flex flex-wrap gap-1.5">
+                                    {project.tech.map((tech) => (
+                                        <span key={tech} className="border border-stone-300 rounded px-2.5 py-0.5 text-xs text-stone-600 bg-white">
+                                            {tech}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                 ))}
             </ol>
         </div>
