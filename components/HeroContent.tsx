@@ -1,27 +1,31 @@
-"use client";
+import Dateline from "./Dateline";
 
-import ResumeWidget from "./ResumeWidget";
+export const EMAIL = "vaishnavghenge@gmail.com";
 
 export default function HeroContent() {
     return (
         <div>
-            <h1 className="font-serif text-5xl font-bold tracking-tight text-stone-900 sm:text-6xl leading-tight">
+            {/* Masthead rule — dateline sits above the name, broadsheet style. */}
+            <div className="flex items-baseline justify-between border-b border-stone-900 pb-2">
+                <span className="rubric text-stone-500">Portfolio</span>
+                <Dateline />
+            </div>
+
+            <h1 className="mt-5 font-serif text-5xl font-bold leading-[1.05] tracking-tight text-stone-900 sm:text-6xl">
                 Vaishnav Ghenge
             </h1>
 
-            <div className="mt-3 h-px bg-stone-300" />
-
-            <p className="mt-3 text-sm font-medium uppercase tracking-widest text-stone-500">
+            <p className="mt-4 border-t border-stone-300 pt-3 text-[11px] font-medium uppercase tracking-[0.2em] text-stone-500">
                 Software Engineer · Backend &amp; Distributed Systems
             </p>
 
-            <p className="mt-5 text-sm leading-relaxed text-stone-600 max-w-lg">
+            <p className="mt-5 max-w-lg text-[15px] leading-relaxed text-stone-600">
                 3 years building production systems at{" "}
                 <a
                     href="https://www.noovosoft.com/"
                     target="_blank"
                     rel="noreferrer"
-                    className="text-stone-900 underline underline-offset-2 hover:text-amber-800 transition-colors"
+                    className="text-stone-900 underline decoration-stone-300 underline-offset-2 transition-colors hover:text-amber-800 hover:decoration-amber-800"
                 >
                     Noovosoft Technologies
                 </a>
@@ -29,9 +33,23 @@ export default function HeroContent() {
                 I care about correctness, reliability, and code that doesn&apos;t need explaining.
             </p>
 
-            <div className="mt-6 flex items-center gap-5">
+            <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-4">
+                <a
+                    href={`mailto:${EMAIL}`}
+                    className="group inline-flex items-center gap-2 border border-stone-900 bg-stone-900 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.18em] text-stone-50 transition-colors hover:border-amber-800 hover:bg-amber-800 font-mono"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5" aria-hidden="true">
+                        <path d="M3 4a2 2 0 00-2 2v.161l8.441 4.221a1.25 1.25 0 001.118 0L19 6.161V6a2 2 0 00-2-2H3z" />
+                        <path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" />
+                    </svg>
+                    Get in touch
+                </a>
+
                 <span className="flex items-center gap-1.5 text-xs text-stone-500">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
+                    <span className="relative flex h-1.5 w-1.5 shrink-0">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
+                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                    </span>
                     Open to work
                 </span>
 
@@ -56,7 +74,6 @@ export default function HeroContent() {
                             <path d="M16.102 17.93l-2.697 2.607c-.466.467-1.111.662-1.823.662s-1.357-.195-1.824-.662l-4.332-4.363c-.467-.467-.702-1.15-.702-1.863s.235-1.357.702-1.824l4.319-4.38c.467-.467 1.125-.645 1.837-.645s1.357.195 1.823.662l2.697 2.606c.514.515 1.365.497 1.9-.038.535-.536.553-1.387.039-1.901l-2.609-2.636a5.055 5.055 0 0 0-2.445-1.337l2.467-2.503c.516-.514.498-1.366-.037-1.901-.535-.535-1.387-.552-1.902-.038l-10.1 10.101c-.981.982-1.494 2.337-1.494 3.835 0 1.498.513 2.895 1.494 3.875l4.347 4.361c.981.979 2.337 1.452 3.834 1.452s2.853-.512 3.835-1.494l2.609-2.637c.514-.514.496-1.365-.039-1.9s-1.386-.553-1.899-.039zM20.811 13.01H10.666c-.702 0-1.27.604-1.27 1.346s.568 1.346 1.27 1.346h10.145c.701 0 1.27-.604 1.27-1.346s-.569-1.346-1.27-1.346z" />
                         </svg>
                     </a>
-                    <ResumeWidget />
                 </div>
             </div>
         </div>

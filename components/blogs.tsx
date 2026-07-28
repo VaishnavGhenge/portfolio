@@ -13,8 +13,7 @@ export default async function Blogs() {
     };
 
     return (
-        <div className="mb-16">
-            <h2 className="font-serif text-lg font-bold uppercase mb-6 tracking-widest text-stone-900">Recent Writing</h2>
+        <div>
             <ol className="divide-y divide-stone-200">
                 {articles.map((article) => (
                     <li key={article.url} className="py-6 first:pt-0">
@@ -31,7 +30,7 @@ export default async function Blogs() {
                                 </div>
                             )}
                             <div className="flex-1 min-w-0">
-                                <h3 className="text-sm font-semibold text-stone-900 leading-snug">
+                                <h3 className="font-serif text-[15px] font-bold leading-snug text-stone-900">
                                     <a
                                         href={article.url}
                                         className="hover:text-amber-800 underline underline-offset-2 decoration-stone-300 hover:decoration-amber-800 transition-colors"
@@ -41,7 +40,7 @@ export default async function Blogs() {
                                         {article.title}
                                     </a>
                                 </h3>
-                                <div className="flex items-center gap-2 mt-1 text-xs text-stone-400">
+                                <div className="mt-1 flex items-center gap-2 font-mono text-[11px] text-stone-400">
                                     <span>{formatDate(article.published_at)}</span>
                                     <span>·</span>
                                     <span>{article.reading_time_minutes} min read</span>

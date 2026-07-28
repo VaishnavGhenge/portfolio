@@ -51,9 +51,39 @@ const skills: Skill[] = [
 ];
 
 const CAT_ORDER: Category[] = ["backend", "frontend", "infra", "systems", "language"];
+const RING_ORDER: Record<Ring, number> = { expert: 0, proficient: 1, familiar: 2 };
+const ringLevel: Record<Ring, number> = { expert: 3, proficient: 2, familiar: 1 };
 
-const ringOpacity: Record<Ring, number> = { expert: 1, proficient: 0.72, familiar: 0.45 };
-const ringDots:    Record<Ring, string>  = { expert: "●●●", proficient: "●●", familiar: "●" };
+/**
+ * Proficiency meter. Three segments, always at full opacity — the *count* of
+ * filled segments carries the signal, so nothing has to be dimmed to read it.
+ */
+function Meter({ level, color }: { level: number; color: string }) {
+    return (
+        <span className="flex shrink-0 items-center gap-[2px]" aria-hidden="true">
+            {[1, 2, 3].map((n) => (
+                <span
+                    key={n}
+                    className="h-[3px] w-[3px] rounded-[0.5px]"
+                    style={{ backgroundColor: n <= level ? color : "rgba(0,0,0,0.13)" }}
+                />
+            ))}
+        </span>
+    );
+}
+
+export function SkillLegend() {
+    return (
+        <div className="flex items-center gap-3 font-mono text-[10px] text-stone-400">
+            {(["expert", "proficient", "familiar"] as Ring[]).map((r) => (
+                <span key={r} className="flex items-center gap-1">
+                    <Meter level={ringLevel[r]} color="#78716c" />
+                    {r}
+                </span>
+            ))}
+        </div>
+    );
+}
 
 export default function SkillGrid() {
     const [hovered, setHovered] = useState<string | null>(null);
@@ -61,19 +91,18 @@ export default function SkillGrid() {
     return (
         <div className="space-y-5">
             {CAT_ORDER.map((cat) => {
-                const catSkills = skills.filter(s => s.category === cat);
-                const color     = categoryColors[cat];
+                const catSkills = skills
+                    .filter((s) => s.category === cat)
+                    .sort((a, b) => RING_ORDER[a.ring] - RING_ORDER[b.ring]);
+                const color = categoryColors[cat];
 
                 return (
                     <div key={cat}>
-                        <div className="flex items-center gap-3 mb-2.5">
-                            <span
-                                className="text-[9px] font-mono uppercase tracking-widest shrink-0"
-                                style={{ color }}
-                            >
+                        <div className="mb-2.5 flex items-center gap-3">
+                            <span className="rubric shrink-0" style={{ color }}>
                                 {categoryLabels[cat]}
                             </span>
-                            <div className="flex-1 h-px" style={{ backgroundColor: `${color}18` }} />
+                            <div className="h-px flex-1" style={{ backgroundColor: `${color}22` }} />
                         </div>
 
                         <div className="flex flex-wrap gap-1.5">
@@ -83,53 +112,42 @@ export default function SkillGrid() {
                                 return (
                                     <div key={skill.id} className="relative">
                                         <button
+                                            type="button"
                                             onMouseEnter={() => setHovered(skill.id)}
                                             onMouseLeave={() => setHovered(null)}
-                                            className="flex items-center gap-1.5 px-2.5 py-1 rounded border text-[11px] font-mono transition-colors duration-150"
+                                            onFocus={() => setHovered(skill.id)}
+                                            onBlur={() => setHovered(null)}
+                                            aria-label={`${skill.name} — ${skill.ring}. ${skill.detail}`}
+                                            className="flex items-center gap-1.5 rounded-sm border px-2.5 py-1 font-mono text-[11px] transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
                                             style={{
-                                                borderColor:     isHov ? `${color}55` : `${color}22`,
-                                                backgroundColor: isHov ? `${color}12` : `${color}07`,
-                                                color:           isHov ? color : `${color}cc`,
-                                                opacity:         isHov ? 1 : ringOpacity[skill.ring],
+                                                borderColor:     isHov ? color : `${color}40`,
+                                                backgroundColor: isHov ? `${color}14` : "rgba(255,255,255,0.6)",
+                                                color:           color,
                                             }}
                                         >
                                             {skill.name}
-                                            <span
-                                                className="text-[7px] tracking-[-1px]"
-                                                style={{ opacity: isHov ? 0.65 : 0.3 }}
-                                            >
-                                                {ringDots[skill.ring]}
-                                            </span>
+                                            <Meter level={ringLevel[skill.ring]} color={color} />
                                         </button>
 
                                         {isHov && (
                                             <div
-                                                className="absolute bottom-full mb-2 left-0 z-50 pointer-events-none"
-                                                style={{ minWidth: 180 }}
+                                                role="tooltip"
+                                                className="pointer-events-none absolute bottom-full left-0 z-50 mb-2"
+                                                style={{ minWidth: 190 }}
                                             >
-                                                <div
-                                                    className="rounded border p-2.5"
-                                                    style={{
-                                                        backgroundColor: "#ffffff",
-                                                        borderColor:     "#e7e5e4",
-                                                        boxShadow:       "0 4px 16px rgba(0,0,0,0.08)",
-                                                    }}
-                                                >
-                                                    <div className="flex items-center gap-1.5 mb-1.5">
+                                                <div className="rounded-sm border border-stone-200 bg-white p-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
+                                                    <div className="mb-1.5 flex items-center gap-1.5">
                                                         <span
-                                                            className="text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded"
-                                                            style={{ backgroundColor: `${color}15`, color }}
+                                                            className="rounded-sm px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider"
+                                                            style={{ backgroundColor: `${color}18`, color }}
                                                         >
                                                             {categoryLabels[cat]}
                                                         </span>
-                                                        <span
-                                                            className="text-[9px] font-mono px-1.5 py-0.5 rounded"
-                                                            style={{ backgroundColor: "rgba(0,0,0,0.04)", color: "rgb(120,113,108)" }}
-                                                        >
+                                                        <span className="rounded-sm bg-stone-100 px-1.5 py-0.5 font-mono text-[9px] text-stone-500">
                                                             {skill.ring}
                                                         </span>
                                                     </div>
-                                                    <p className="text-[10px] text-stone-600 leading-relaxed">
+                                                    <p className="text-[11px] leading-relaxed text-stone-600">
                                                         {skill.detail}
                                                     </p>
                                                 </div>

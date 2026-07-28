@@ -17,7 +17,7 @@ function VartalaapP2P() {
 
     return (
         <div className="flex items-center justify-center w-full py-2">
-            <svg width="100%" viewBox="0 0 260 108" fill="none" overflow="visible">
+            <svg width="100%" viewBox="0 0 260 120" fill="none">
                 {/* Direct P2P connection line */}
                 <line
                     x1={peerA.x + 22} y1={peerA.y}
@@ -113,10 +113,10 @@ function VartalaapP2P() {
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 2.5, repeat: Infinity }}
                 >
-                    <rect x={midX - 22} y={99} width={44} height={10} rx={5}
+                    <rect x={midX - 24} y={106} width={48} height={11} rx={5.5}
                         fill="rgba(45,212,191,0.08)" stroke="rgba(45,212,191,0.25)" strokeWidth="0.8"
                     />
-                    <text x={midX} y={107} textAnchor="middle"
+                    <text x={midX} y={113.5} textAnchor="middle"
                         fill="#2dd4bf" fontSize="6" fontFamily="monospace"
                     >screen share</text>
                 </motion.g>
@@ -281,7 +281,7 @@ export default function Projects() {
         {
             title: "Vartalaap",
             url: "https://vartalaap.vaishnavghenge.com/",
-            titleExplaination: "HD Video Calling with Real-Time Media Processing",
+            subtitle: "HD Video Calling with Real-Time Media Processing",
             description:
                 "Built a high-quality P2P video call app focused on call reliability and media fidelity. Features HD 1080p video, background blur and virtual backgrounds via MediaPipe, screen sharing, acoustic echo cancellation, and background noise suppression — tackling the exact frustrations people have with mainstream video apps. Signaling handled by a lightweight Go WebSocket server with zero dependencies.",
             tech: ["Next.js", "Go", "WebRTC", "MediaPipe", "simple-peer", "WebSockets", "Zustand"],
@@ -291,7 +291,7 @@ export default function Projects() {
         {
             title: "Servio",
             url: "https://github.com/VaishnavGhenge/servio",
-            titleExplaination: "GUI-Based Systemd Service Manager",
+            subtitle: "GUI-Based Systemd Service Manager",
             description:
                 "Built a visually rich Web GUI for orchestrating Linux servers, replacing command-line fatigue with a modern dashboard. Directly interfaces with Systemd via D-Bus to start/stop services, view real-time journald logs, and manage environment variables. Includes a Git-integrated deployment pipeline that automatically builds and reloads services on push.",
             tech: ["Go (Golang)", "Linux Systemd", "WebSockets", "React UI", "SQLite", "D-Bus"],
@@ -301,7 +301,7 @@ export default function Projects() {
         {
             title: "django-silky",
             url: "https://pypi.org/project/django-silky/",
-            titleExplaination: "Production-Quality Fork of django-silk",
+            subtitle: "Production-Quality Fork of django-silk",
             description:
                 "Forked the popular django-silk profiling library and shipped a fully modernized version: persistent dark/light theming, inline collapsible filter bar, D3.js analytics dashboards, N+1 query detection with endpoint attribution, and self-hosted icons (zero CDN dependencies). Drop-in replacement — no new migrations required.",
             tech: ["Python", "Django", "D3.js", "CSS Custom Properties", "PostgreSQL"],
@@ -311,72 +311,68 @@ export default function Projects() {
     ];
 
     return (
-        <div className="mb-16">
-            <h2 className="font-serif text-lg font-bold uppercase mb-8 tracking-widest text-stone-900">
-                Featured Projects
-            </h2>
-            <ol className="space-y-12">
-                {projects.map((project) => (
-                    <li key={project.title}>
-                        <div className="grid gap-6 sm:grid-cols-8">
-                            {/* Dark terminal panel — intentional contrast on light page */}
-                            <div className="sm:col-span-3 sm:order-2">
-                                <div className="rounded border border-stone-800 bg-stone-900 h-full flex flex-col justify-center overflow-hidden">
-                                    {project.highlight}
-                                    <div className="bg-black/30 p-2 text-center border-t border-stone-800">
-                                        <p className="text-[10px] text-stone-500 font-mono uppercase tracking-wider">
-                                            Technical Highlight
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+        <ol className="space-y-14">
+            {projects.map((project, i) => (
+                <li key={project.title}>
+                    <div className="flex items-baseline gap-3">
+                        <span className="rubric text-stone-300">
+                            {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <h3 className="font-serif text-lg font-bold text-stone-900">
+                            <a
+                                href={project.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="underline decoration-stone-300 underline-offset-4 transition-colors hover:text-amber-800 hover:decoration-amber-800"
+                            >
+                                {project.title}
+                            </a>
+                            <span aria-hidden="true" className="ml-1 text-sm text-stone-400">↗</span>
+                        </h3>
+                    </div>
 
-                            {/* Content */}
-                            <div className="sm:col-span-5 sm:order-1">
-                                <h3 className="font-serif font-bold text-stone-900">
-                                    <a
-                                        href={project.url}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="hover:text-amber-800 underline underline-offset-2 decoration-stone-300 hover:decoration-amber-800 transition-colors"
-                                    >
-                                        {project.title} ↗
-                                    </a>
-                                </h3>
+                    {project.subtitle && (
+                        <p className="mt-1.5 text-[11px] font-medium uppercase tracking-[0.16em] text-stone-500">
+                            {project.subtitle}
+                        </p>
+                    )}
 
-                                {project.titleExplaination && (
-                                    <p className="text-xs text-stone-500 mt-1 mb-3 font-medium uppercase tracking-wide">
-                                        {project.titleExplaination}
-                                    </p>
-                                )}
+                    <p className="mt-3 text-[15px] leading-relaxed text-stone-600">
+                        {project.description}
+                    </p>
 
-                                <p className="text-sm leading-relaxed text-stone-600">
-                                    {project.description}
-                                </p>
-
-                                {'engineeringDecision' in project && project.engineeringDecision && (
-                                    <div className="mt-3 border-l-2 border-stone-300 pl-3 py-1">
-                                        <p className="text-[10px] text-stone-400 font-mono uppercase tracking-wider mb-1">
-                                            Engineering Decision
-                                        </p>
-                                        <p className="text-xs text-stone-500 leading-relaxed">
-                                            {project.engineeringDecision}
-                                        </p>
-                                    </div>
-                                )}
-
-                                <div className="mt-3 flex flex-wrap gap-1.5">
-                                    {project.tech.map((tech) => (
-                                        <span key={tech} className="border border-stone-300 rounded px-2.5 py-0.5 text-xs text-stone-600 bg-white">
-                                            {tech}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
+                    {/* Technical highlight — full-width figure so the diagram is legible.
+                        Inner max-width keeps the small mono type at a comfortable measure. */}
+                    <figure className="mt-5 overflow-hidden rounded-sm border border-stone-800 bg-stone-900 shadow-sm">
+                        <div className="mx-auto w-full max-w-[540px] px-2 py-4">
+                            {project.highlight}
                         </div>
-                    </li>
-                ))}
-            </ol>
-        </div>
+                        <figcaption className="border-t border-stone-800 bg-black/30 px-3 py-2 text-center">
+                            <span className="rubric text-stone-500">Technical Highlight</span>
+                        </figcaption>
+                    </figure>
+
+                    {project.engineeringDecision && (
+                        <div className="mt-5 border-l-2 border-amber-800/40 py-1 pl-4">
+                            <p className="rubric mb-1 text-amber-800/70">Engineering Decision</p>
+                            <p className="text-[13px] leading-relaxed text-stone-500">
+                                {project.engineeringDecision}
+                            </p>
+                        </div>
+                    )}
+
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                        {project.tech.map((tech) => (
+                            <span
+                                key={tech}
+                                className="rounded-sm border border-stone-300 bg-white px-2 py-0.5 font-mono text-[11px] text-stone-600"
+                            >
+                                {tech}
+                            </span>
+                        ))}
+                    </div>
+                </li>
+            ))}
+        </ol>
     );
 }

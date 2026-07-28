@@ -2,8 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --paper: #faf8f4;
+    --ink: #1c1917;
+    --accent: #9a3412;
+}
+
 html {
     scroll-behavior: smooth;
+    /* keep sticky nav from covering anchored headings */
+    scroll-padding-top: 5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -11,8 +19,64 @@ html {
 }
 
 body {
-    background-color: #faf8f4;
+    background-color: var(--paper);
     background-image: radial-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px);
     background-size: 24px 24px;
-    color: #1c1917;
+    color: var(--ink);
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+}
+
+::selection {
+    background-color: rgba(154, 52, 18, 0.14);
+    color: var(--ink);
+}
+
+/* Editorial drop cap — opens the first column of prose. */
+.dropcap::first-letter {
+    float: left;
+    font-family: var(--font-playfair), Georgia, serif;
+    font-size: 3.25em;
+    line-height: 0.82;
+    font-weight: 700;
+    padding-right: 0.09em;
+    padding-top: 0.04em;
+    color: var(--ink);
+}
+
+/* Small-caps rubric used for section numbers and labels. */
+.rubric {
+    font-family: var(--font-plex-mono), ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+/* ── Duck companion ────────────────────────────────────────────────────── */
+
+@keyframes duck-bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-2px); }
+}
+
+@keyframes duck-nudge {
+    0%   { transform: translateY(0) rotate(0deg); }
+    30%  { transform: translateY(-5px) rotate(-7deg); }
+    60%  { transform: translateY(0) rotate(5deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes bubble-in {
+    from { opacity: 0; transform: translateY(4px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.duck-idle   { animation: duck-bob 3.4s ease-in-out infinite; }
+.duck-nudge  { animation: duck-nudge 0.42s ease-in-out; }
+.duck-bubble { animation: bubble-in 0.22s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+    .duck-idle,
+    .duck-nudge,
+    .duck-bubble { animation: none; }
 }

@@ -1,201 +1,258 @@
 export default function EditorialCartoon() {
-    const agentLines = [
-        "agent: feature complete",
-        "diff: +4,812 -18",
-        "tests: passed locally",
-        "todo: define locally",
-    ];
-
-    const alerts = [
-        { label: "CI", detail: "1 flaky test", fill: "#fee2e2", stroke: "#b91c1c" },
-        { label: "SEC", detail: "new CVE", fill: "#fff7ed", stroke: "#c2410c" },
-        { label: "PM", detail: "ship today?", fill: "#ecfeff", stroke: "#0e7490" },
-    ];
-
-    const prs = [
-        { id: "#841", title: "auth refactor", y: 195, rotate: -7 },
-        { id: "#842", title: "fix auth", y: 207, rotate: 5 },
-        { id: "#843", title: "fix fix", y: 219, rotate: -4 },
-    ];
-
     return (
-        <div className="mb-16">
+        <div>
             <div className="mb-5 text-center">
-                <p className="text-[10px] font-mono uppercase tracking-widest text-stone-400 mb-2">
-                    - Editorial -
-                </p>
-                <h2 className="font-serif text-xl font-bold tracking-tight text-stone-900">
-                    Consequences Engineer
-                </h2>
+                <h3 className="font-serif text-xl font-bold tracking-tight text-stone-900">
+                    First Reader
+                </h3>
             </div>
 
-            <div className="border-2 border-stone-900 mx-auto bg-white" style={{ maxWidth: 520 }}>
+            <figure className="mx-auto border-2 border-stone-900 bg-white" style={{ maxWidth: 520 }}>
                 <svg
-                    viewBox="0 0 520 336"
-                    fill="none"
+                    viewBox="0 0 520 320"
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-full"
                     role="img"
-                    aria-labelledby="editorial-cartoon-title"
+                    aria-labelledby="cartoon-title"
                 >
-                    <title id="editorial-cartoon-title">
-                        Editorial cartoon: an AI coding agent says it passed imaginary tests while a developer inherits review, CI failures, security warnings, and product pressure.
+                    <title id="cartoon-title">
+                        Editorial cartoon: a tired developer sits at a desk late at night, chin
+                        resting in one hand, smiling at a rubber duck beside the laptop. On the
+                        laptop screen, the tests have finally passed.
                     </title>
+
                     <defs>
-                        <pattern id="cartoon-hatch" width="8" height="8" patternUnits="userSpaceOnUse">
-                            <path d="M-2 8 L8 -2 M2 10 L10 2" stroke="#1c1917" strokeWidth="0.6" opacity="0.12" />
-                        </pattern>
-                        <filter id="cartoon-shadow" x="-20%" y="-20%" width="140%" height="140%">
-                            <feDropShadow dx="2" dy="3" stdDeviation="0" floodColor="#1c1917" floodOpacity="0.18" />
+                        {/* Displacement gives every clean path a hand-inked wobble. */}
+                        <filter id="ink" x="-6%" y="-6%" width="112%" height="112%">
+                            <feTurbulence
+                                type="fractalNoise"
+                                baseFrequency="0.017"
+                                numOctaves="3"
+                                seed="11"
+                                result="noise"
+                            />
+                            <feDisplacementMap
+                                in="SourceGraphic"
+                                in2="noise"
+                                scale="1.9"
+                                xChannelSelector="R"
+                                yChannelSelector="G"
+                            />
                         </filter>
+
+                        <pattern
+                            id="night"
+                            width="7"
+                            height="7"
+                            patternUnits="userSpaceOnUse"
+                            patternTransform="rotate(38)"
+                        >
+                            <line x1="0" y1="0" x2="0" y2="7" stroke="#1c1917" strokeWidth="0.55" opacity="0.5" />
+                        </pattern>
+
+                        <linearGradient id="cone" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#fde68a" stopOpacity="0.55" />
+                            <stop offset="100%" stopColor="#fde68a" stopOpacity="0" />
+                        </linearGradient>
+
+                        <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+                            <stop offset="0%" stopColor="#fdba74" stopOpacity="0.34" />
+                            <stop offset="55%" stopColor="#fcd34d" stopOpacity="0.13" />
+                            <stop offset="100%" stopColor="#fcd34d" stopOpacity="0" />
+                        </radialGradient>
                     </defs>
 
-                    <rect width="520" height="336" fill="#faf8f4" />
-                    <rect x="14" y="14" width="492" height="278" fill="url(#cartoon-hatch)" opacity="0.9" />
-                    <line x1="18" y1="260" x2="502" y2="260" stroke="#1c1917" strokeWidth="2" />
+                    {/* Room: dark everywhere the lamp does not reach */}
+                    <rect width="520" height="320" fill="#faf8f4" />
+                    <rect width="520" height="298" fill="url(#night)" opacity="0.42" />
+                    <path d="M220 66 L90 250 L430 250 L280 66 Z" fill="url(#cone)" />
+                    <ellipse cx="250" cy="162" rx="205" ry="152" fill="url(#glow)" />
 
-                    {/* Agent console */}
-                    <g filter="url(#cartoon-shadow)">
-                        <rect x="26" y="36" width="190" height="142" rx="5" fill="#1c1917" stroke="#1c1917" strokeWidth="2" />
-                        <rect x="26" y="36" width="190" height="24" rx="5" fill="#292524" />
-                        <rect x="26" y="52" width="190" height="8" fill="#292524" />
-                        <circle cx="42" cy="48" r="4" fill="#ef4444" opacity="0.8" />
-                        <circle cx="56" cy="48" r="4" fill="#f59e0b" opacity="0.8" />
-                        <circle cx="70" cy="48" r="4" fill="#22c55e" opacity="0.8" />
-                        <text x="121" y="51" textAnchor="middle" fontFamily="monospace" fontSize="9" fill="#a8a29e">
-                            ai-agent run
-                        </text>
-                        {agentLines.map((line, i) => (
-                            <text
-                                key={line}
-                                x="42"
-                                y={84 + i * 22}
-                                fontFamily="monospace"
-                                fontSize="10"
-                                fill={i === 0 ? "#86efac" : i === 2 ? "#fde68a" : "#e7e5e4"}
-                            >
-                                {line}
-                            </text>
-                        ))}
-                        <rect x="42" y="154" width="8" height="12" fill="#a8a29e" opacity="0.7" />
-                    </g>
-
-                    {/* Robot agent */}
-                    <g transform="translate(238 42)" filter="url(#cartoon-shadow)">
-                        <path d="M43 19 L48 4" stroke="#1c1917" strokeWidth="2" strokeLinecap="round" />
-                        <circle cx="49" cy="3" r="3" fill="#f97316" stroke="#1c1917" strokeWidth="1.5" />
-                        <rect x="10" y="20" width="76" height="62" rx="12" fill="#e0f2fe" stroke="#1c1917" strokeWidth="2" />
-                        <rect x="23" y="35" width="50" height="21" rx="5" fill="#faf8f4" stroke="#1c1917" strokeWidth="1.5" />
-                        <circle cx="38" cy="45" r="3.5" fill="#0f766e" />
-                        <circle cx="58" cy="45" r="3.5" fill="#0f766e" />
-                        <path d="M39 61 Q48 68 59 61" stroke="#1c1917" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-                        <rect x="31" y="82" width="35" height="30" rx="6" fill="#bae6fd" stroke="#1c1917" strokeWidth="2" />
-                        <path d="M10 50 C-7 54 -9 78 5 86" stroke="#1c1917" strokeWidth="3" fill="none" strokeLinecap="round" />
-                        <path d="M86 50 C107 54 105 80 91 90" stroke="#1c1917" strokeWidth="3" fill="none" strokeLinecap="round" />
-                        <rect x="93" y="82" width="54" height="28" rx="3" fill="#fef3c7" stroke="#1c1917" strokeWidth="1.8" />
-                        <text x="120" y="100" textAnchor="middle" fontFamily="monospace" fontSize="11" fontWeight="700" fill="#1c1917">
-                            DONE!
-                        </text>
-                    </g>
-
-                    {/* Robot speech bubble */}
-                    <g>
+                    <g
+                        filter="url(#ink)"
+                        stroke="#1c1917"
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    >
+                        {/* Window — night sky, one crescent moon */}
                         <path
-                            d="M306 28 H448 Q462 28 462 42 V84 Q462 98 448 98 H344 L328 115 L331 98 H306 Q292 98 292 84 V42 Q292 28 306 28 Z"
-                            fill="#ffffff"
-                            stroke="#1c1917"
-                            strokeWidth="2"
+                            d="M398 30 C430 27, 466 28, 494 30 C496 56, 495 84, 494 106 C462 109, 428 109, 398 106 C396 82, 397 54, 398 30 Z"
+                            fill="#f3ede3"
+                            strokeWidth="2.4"
                         />
-                        <text x="313" y="51" fontFamily="Georgia, serif" fontSize="14" fill="#1c1917">
-                            I passed the tests
-                        </text>
-                        <text x="313" y="73" fontFamily="Georgia, serif" fontSize="14" fill="#1c1917">
-                            I imagined.
-                        </text>
-                    </g>
-
-                    {/* Alert stack */}
-                    <g>
-                        {alerts.map((alert, i) => (
-                            <g key={alert.label} transform={`translate(${332 + i * 48} ${128 + i * 9}) rotate(${i === 1 ? 4 : -5})`}>
-                                <rect width="90" height="42" rx="5" fill={alert.fill} stroke={alert.stroke} strokeWidth="1.8" />
-                                <text x="10" y="17" fontFamily="monospace" fontSize="12" fontWeight="700" fill={alert.stroke}>
-                                    {alert.label}
-                                </text>
-                                <text x="10" y="32" fontFamily="monospace" fontSize="9" fill="#44403c">
-                                    {alert.detail}
-                                </text>
-                            </g>
-                        ))}
-                    </g>
-
-                    {/* Pull request paperwork */}
-                    <g>
-                        <path d="M210 205 C260 187 322 190 366 210" stroke="#1c1917" strokeWidth="3" strokeLinecap="round" />
-                        <path d="M210 218 C260 200 322 203 366 223" stroke="#78716c" strokeWidth="8" strokeLinecap="round" opacity="0.4" />
-                        {prs.map((pr, i) => (
-                            <g key={pr.id} transform={`translate(${221 + i * 34} ${pr.y}) rotate(${pr.rotate})`} filter="url(#cartoon-shadow)">
-                                <rect width="80" height="44" rx="3" fill="#ffffff" stroke="#1c1917" strokeWidth="1.5" />
-                                <path d="M0 10 H80" stroke="#1c1917" strokeWidth="1" opacity="0.25" />
-                                <text x="9" y="25" fontFamily="monospace" fontSize="11" fontWeight="700" fill="#1c1917">
-                                    PR {pr.id}
-                                </text>
-                                <text x="9" y="38" fontFamily="monospace" fontSize="8" fill="#57534e">
-                                    {pr.title}
-                                </text>
-                            </g>
-                        ))}
-                    </g>
-
-                    {/* Developer and review desk */}
-                    <g filter="url(#cartoon-shadow)">
-                        <rect x="330" y="222" width="154" height="14" rx="2" fill="#d6d3d1" stroke="#1c1917" strokeWidth="1.8" />
-                        <rect x="346" y="236" width="8" height="42" rx="1" fill="#d6d3d1" stroke="#1c1917" strokeWidth="1.2" />
-                        <rect x="466" y="236" width="8" height="42" rx="1" fill="#d6d3d1" stroke="#1c1917" strokeWidth="1.2" />
-                        <rect x="384" y="174" width="56" height="52" rx="9" fill="#faf8f4" stroke="#1c1917" strokeWidth="2" />
-                        <circle cx="412" cy="149" r="24" fill="#faf8f4" stroke="#1c1917" strokeWidth="2" />
-                        <path d="M390 145 Q397 125 416 124 Q431 125 436 143 Q421 135 406 138 Q398 139 390 145 Z" fill="#1c1917" />
-                        <rect x="395" y="149" width="16" height="8" rx="4" stroke="#1c1917" strokeWidth="1.5" />
-                        <rect x="416" y="149" width="16" height="8" rx="4" stroke="#1c1917" strokeWidth="1.5" />
-                        <line x1="411" y1="153" x2="416" y2="153" stroke="#1c1917" strokeWidth="1.5" />
-                        <path d="M405 166 Q413 161 421 166" stroke="#1c1917" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-                        <path d="M391 191 C366 195 356 209 354 222" stroke="#1c1917" strokeWidth="3" fill="none" strokeLinecap="round" />
-                        <path d="M435 190 C457 196 462 208 460 222" stroke="#1c1917" strokeWidth="3" fill="none" strokeLinecap="round" />
-                        <rect x="349" y="204" width="45" height="27" rx="3" fill="#fee2e2" stroke="#1c1917" strokeWidth="1.5" transform="rotate(-7 349 204)" />
-                        <text x="360" y="222" fontFamily="monospace" fontSize="9" fontWeight="700" fill="#991b1b" transform="rotate(-7 360 222)">
-                            REVIEW
-                        </text>
-                    </g>
-
-                    {/* Developer speech bubble */}
-                    <g>
                         <path
-                            d="M39 196 H181 Q194 196 194 209 V241 Q194 254 181 254 H92 L72 272 L77 254 H39 Q26 254 26 241 V209 Q26 196 39 196 Z"
-                            fill="#ffffff"
-                            stroke="#1c1917"
-                            strokeWidth="2"
+                            d="M398 30 C430 27, 466 28, 494 30 C496 56, 495 84, 494 106 C462 109, 428 109, 398 106 C396 82, 397 54, 398 30 Z"
+                            fill="url(#night)"
+                            stroke="none"
+                            opacity="0.75"
                         />
-                        <text x="44" y="219" fontFamily="Georgia, serif" fontSize="14" fill="#1c1917">
-                            Great. I will run
-                        </text>
-                        <text x="44" y="240" fontFamily="Georgia, serif" fontSize="14" fill="#1c1917">
-                            the real ones.
-                        </text>
+                        <path
+                            d="M477 44 C468 47, 463 55, 465 63 C467 71, 476 76, 484 73 C477 69, 473 62, 474 55 C475 50, 475 46, 477 44 Z"
+                            fill="#faf8f4"
+                            strokeWidth="1.3"
+                        />
+                        <path d="M417 52 L417 60 M413 56 L421 56" strokeWidth="1.1" opacity="0.6" />
+                        <path d="M434 84 L434 90 M431 87 L437 87" strokeWidth="1" opacity="0.5" />
+                        <path d="M446 29 C447 56, 446 82, 446 107" strokeWidth="1.6" />
+                        <path d="M398 68 C430 66, 464 67, 494 67" strokeWidth="1.6" />
+
+                        {/* Pendant lamp */}
+                        <path d="M250 0 C251 14, 249 28, 250 40" strokeWidth="1.8" />
+                        <path
+                            d="M216 66 C228 43, 233 40, 250 40 C267 40, 272 43, 284 66 C266 71, 234 71, 216 66 Z"
+                            fill="#faf8f4"
+                            strokeWidth="2.4"
+                        />
+                        <path
+                            d="M245 70 C245 76, 248 79, 251 79 C254 79, 256 76, 256 70 Z"
+                            fill="#fbbf24"
+                            strokeWidth="1.3"
+                        />
+
+                        {/* Desk */}
+                        <path
+                            d="M14 246 C150 243, 370 249, 506 245 L506 264 C370 268, 150 262, 14 265 Z"
+                            fill="#f0eae0"
+                            strokeWidth="2.4"
+                        />
+                        <path d="M14 265 C150 262, 370 268, 506 264" strokeWidth="1.4" opacity="0.5" />
+
+                        {/* Laptop — the tests have passed */}
+                        <path
+                            d="M118 245 C120 215, 124 191, 128 173 C160 170, 200 168, 228 167 C228 191, 229 217, 230 241 C196 242, 150 244, 118 245 Z"
+                            fill="#faf8f4"
+                            strokeWidth="2.4"
+                        />
+                        <path
+                            d="M127 238 C129 213, 132 193, 135 179 C162 176, 196 175, 221 174 C221 195, 222 216, 222 235 C194 236, 155 237, 127 238 Z"
+                            fill="#fffdf6"
+                            strokeWidth="1.2"
+                        />
+                        <path d="M141 189 C152 188, 162 188, 170 188" strokeWidth="1.3" opacity="0.28" />
+                        <path d="M141 229 C158 228, 186 227, 205 227" strokeWidth="1.3" opacity="0.28" />
+                        <path d="M156 206 L168 218 L196 191" stroke="#15803d" strokeWidth="4.2" />
+                        <path
+                            d="M112 246 C140 243, 200 241, 230 240 L248 248 C214 251, 148 253, 120 254 Z"
+                            fill="#f7f2e9"
+                            strokeWidth="2.2"
+                        />
+
+                        {/* Mug, long since gone cold */}
+                        <path
+                            d="M74 226 C73 240, 78 246, 86 246 C94 246, 99 240, 98 226 C90 224, 82 224, 74 226 Z"
+                            fill="#faf8f4"
+                            strokeWidth="2.2"
+                        />
+                        <path d="M98 230 C107 228, 109 237, 100 240" strokeWidth="1.8" />
+
+                        {/* The duck */}
+                        <path
+                            d="M248 244 C240 232, 245 218, 259 215 C274 212, 287 220, 289 232 C290 240, 286 244, 282 245 C271 246, 258 246, 248 244 Z"
+                            fill="#fcd34d"
+                            strokeWidth="2.3"
+                        />
+                        <path
+                            d="M277 214 C273 204, 278 194, 288 193 C297 192, 304 199, 304 208 C304 214, 300 219, 294 220 C287 221, 280 219, 277 214 Z"
+                            fill="#fcd34d"
+                            strokeWidth="2.3"
+                        />
+                        <path
+                            d="M303 205 C310 202, 316 205, 315 210 C314 214, 307 214, 302 211 Z"
+                            fill="#f97316"
+                            strokeWidth="1.6"
+                        />
+                        <path d="M293 202 C295 202, 296 204, 295 206 C293 207, 291 205, 293 202 Z" fill="#1c1917" strokeWidth="0.8" />
+                        <path d="M257 229 C264 224, 275 226, 278 233" strokeWidth="1.7" />
+                        <path d="M240 247 C258 250, 282 250, 296 247" strokeWidth="1.2" opacity="0.35" />
+
+                        {/* Developer — chin in hand, looking at the duck */}
+                        <path
+                            d="M358 248 C354 212, 363 181, 383 173 C394 169, 405 170, 413 176 C429 189, 437 216, 437 248 Z"
+                            fill="#faf8f4"
+                            strokeWidth="2.5"
+                        />
+                        <path d="M382 156 C383 164, 383 169, 382 174" strokeWidth="2" />
+                        <path d="M402 155 C402 163, 403 169, 404 173" strokeWidth="2" />
+
+                        <path
+                            d="M363 128 C361 108, 372 94, 390 93 C408 92, 419 105, 419 124 C419 143, 408 157, 391 158 C374 159, 364 146, 363 128 Z"
+                            fill="#faf8f4"
+                            strokeWidth="2.5"
+                        />
+                        <path
+                            d="M363 119 C361 100, 373 87, 391 87 C407 87, 418 96, 420 110 C412 100, 400 96, 388 98 C376 100, 367 108, 363 119 Z"
+                            fill="#1c1917"
+                            strokeWidth="1.4"
+                        />
+                        <path d="M399 88 C403 82, 409 81, 412 84" strokeWidth="1.6" />
+                        <path d="M392 86 C394 80, 399 78, 402 80" strokeWidth="1.4" />
+
+                        {/* Glasses */}
+                        <path
+                            d="M367 124 C367 118, 373 115, 380 116 C387 117, 389 122, 388 127 C387 133, 380 135, 374 134 C369 133, 367 129, 367 124 Z"
+                            strokeWidth="1.8"
+                        />
+                        <path
+                            d="M396 124 C396 118, 402 115, 409 116 C416 117, 418 122, 417 127 C416 133, 409 135, 403 134 C398 133, 396 129, 396 124 Z"
+                            strokeWidth="1.8"
+                        />
+                        <path d="M388 124 C391 122, 393 122, 396 124" strokeWidth="1.5" />
+
+                        {/* Tired, but glad */}
+                        <path d="M372 127 C375 122, 381 122, 384 127" strokeWidth="1.9" />
+                        <path d="M401 127 C404 122, 410 122, 413 127" strokeWidth="1.9" />
+                        <path d="M373 133 C377 135, 381 135, 384 134" strokeWidth="1.1" opacity="0.4" />
+                        <path d="M402 133 C406 135, 410 135, 413 134" strokeWidth="1.1" opacity="0.4" />
+                        <path d="M383 145 C389 151, 398 150, 403 143" strokeWidth="2" />
+
+                        {/* Arm propping up the chin */}
+                        <path d="M364 190 C349 204, 341 224, 339 243" strokeWidth="3.2" />
+                        <path d="M339 243 C341 211, 351 176, 365 157" strokeWidth="3.2" />
+                        <path
+                            d="M359 152 C358 142, 365 135, 373 137 C380 139, 382 147, 378 154 C373 160, 362 159, 359 152 Z"
+                            fill="#faf8f4"
+                            strokeWidth="1.9"
+                        />
+                        <path d="M366 139 C368 143, 369 148, 368 154" strokeWidth="1.2" opacity="0.55" />
+                        <path d="M372 140 C374 144, 375 148, 374 153" strokeWidth="1.2" opacity="0.55" />
+
+                        {/* Other arm, resting */}
+                        <path d="M417 184 C432 197, 440 221, 442 244" strokeWidth="3.2" />
+                        <path
+                            d="M434 244 C433 238, 438 235, 444 236 C450 237, 452 242, 449 246 C445 249, 437 249, 434 244 Z"
+                            fill="#faf8f4"
+                            strokeWidth="1.9"
+                        />
+
+                        {/* Floor, unlit */}
+                        <path d="M14 268 C160 265, 380 271, 506 267" strokeWidth="1.2" opacity="0.3" />
                     </g>
 
-                    {/* Newspaper-style signature marks */}
-                    <text x="28" y="314" fontFamily="monospace" fontSize="9" fill="#78716c">
-                        MODERN DEVELOPMENT, 2026
+                    {/* Cartoonist's marks — kept outside the wobble filter so they stay crisp */}
+                    <path d="M22 292 C160 290, 370 294, 498 291" stroke="#1c1917" strokeWidth="1" opacity="0.25" fill="none" />
+                    <text x="24" y="310" fontFamily="monospace" fontSize="9" letterSpacing="1.4" fill="#a8a29e">
+                        THE NIGHT SHIFT
                     </text>
-                    <path d="M410 304 C423 297 438 297 452 306 C461 312 473 312 486 303" stroke="#1c1917" strokeWidth="1.2" fill="none" opacity="0.45" />
+                    <text
+                        x="496"
+                        y="310"
+                        textAnchor="end"
+                        fontFamily="Georgia, serif"
+                        fontSize="12"
+                        fontStyle="italic"
+                        fill="#78716c"
+                    >
+                        — v.g.
+                    </text>
                 </svg>
 
-                <div className="border-t-2 border-stone-900 px-5 py-3 bg-white">
-                    <p className="text-sm text-center text-stone-700" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>
-                        &quot;The AI wrote the code. I got promoted to consequences engineer.&quot;
+                <figcaption className="border-t-2 border-stone-900 bg-white px-5 py-3">
+                    <p className="text-center text-sm italic text-stone-700" style={{ fontFamily: "Georgia, serif" }}>
+                        &ldquo;It passed at 3:47 a.m. The duck heard it first.&rdquo;
                     </p>
-                </div>
-            </div>
+                </figcaption>
+            </figure>
         </div>
     );
 }

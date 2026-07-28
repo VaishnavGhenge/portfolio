@@ -10,6 +10,8 @@ const config: Config = {
     extend: {
       fontFamily: {
         serif: ["var(--font-playfair)", "Georgia", "serif"],
+        sans: ["var(--font-newsreader)", "Georgia", "serif"],
+        mono: ["var(--font-plex-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

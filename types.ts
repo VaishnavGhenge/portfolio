@@ -6,7 +6,8 @@ export interface IRole {
 
 export interface IExperience {
     company: string;
+    companyUrl?: string;
     roles: IRole[];
-    description: string;
+    description: React.ReactNode;
     skills: string[];
 }
