@@ -3,19 +3,19 @@
 import { useEffect, useState } from "react";
 
 const links = [
-    { href: "#about", label: "About" },
-    { href: "#experience", label: "Experience" },
-    { href: "#projects", label: "Projects" },
-    { href: "#skills", label: "Skills" },
-    { href: "#blogs", label: "Writing" },
-    { href: "#editorial", label: "Cartoon" },
+    { href: "#front", label: "Front Page" },
+    { href: "#features", label: "Features" },
+    { href: "#markets", label: "Markets" },
+    { href: "#opinion", label: "Opinion" },
+    { href: "#comics", label: "Comics" },
+    { href: "#classifieds", label: "Classifieds" },
 ];
 
 export default function SectionNav() {
     const [active, setActive] = useState<string>("");
     const [progress, setProgress] = useState(0);
 
-    // Reading progress — a hairline that fills along the nav's bottom rule.
+    // Reading progress: a hairline that fills along the nav's bottom rule.
     useEffect(() => {
         const onScroll = () => {
             const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -57,9 +57,9 @@ export default function SectionNav() {
     return (
         <nav
             aria-label="Section navigation"
-            className="sticky top-0 z-40 -mx-6 mb-16 border-y border-stone-900 bg-[#faf8f4]/85 px-6 py-2.5 backdrop-blur-sm"
+            className="sticky top-0 z-40 -mx-4 mb-10 border-b border-stone-900 bg-[#faf8f4]/90 px-4 backdrop-blur-sm sm:-mx-6 sm:px-6"
         >
-            <div className="mx-auto flex max-w-2xl flex-wrap items-center gap-x-5 gap-y-1.5">
+            <div className="-mx-2 flex items-center overflow-x-auto [scrollbar-width:none] sm:justify-center">
                 {links.map((link) => {
                     const isActive = active === link.href;
                     return (
@@ -67,14 +67,14 @@ export default function SectionNav() {
                             key={link.href}
                             href={link.href}
                             aria-current={isActive ? "true" : undefined}
-                            className={`rubric relative transition-colors ${
-                                isActive ? "text-stone-900" : "text-stone-400 hover:text-stone-900"
+                            className={`rubric relative shrink-0 px-2 py-3 transition-colors ${
+                                isActive ? "text-stone-900" : "text-stone-600 hover:text-stone-900"
                             }`}
                         >
                             {link.label}
                             <span
-                                className={`absolute -bottom-1 left-0 h-px bg-amber-800 transition-all duration-300 ${
-                                    isActive ? "w-full opacity-100" : "w-0 opacity-0"
+                                className={`absolute bottom-2 left-2 h-px bg-amber-800 transition-all duration-300 ${
+                                    isActive ? "w-[calc(100%-1rem)] opacity-100" : "w-0 opacity-0"
                                 }`}
                             />
                         </a>

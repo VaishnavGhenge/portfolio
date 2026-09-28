@@ -12,6 +12,7 @@ const config: Config = {
         serif: ["var(--font-playfair)", "Georgia", "serif"],
         sans: ["var(--font-newsreader)", "Georgia", "serif"],
         mono: ["var(--font-plex-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
+        blackletter: ["var(--font-blackletter)", "Georgia", "serif"],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

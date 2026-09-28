@@ -1,77 +1,68 @@
 import { getTopArticles } from '@/lib/devto';
 import Image from 'next/image';
 
+const PROFILE = 'https://dev.to/vaishnavghenge';
+
+// Static class names so Tailwind can see them; the API returns up to three articles.
+const COLS: Record<number, string> = { 1: '', 2: 'md:grid-cols-2', 3: 'md:grid-cols-3' };
+
+// dev.to returns descriptions HTML-escaped ("Installation &amp; Setup").
+const decode = (s: string) =>
+    s.replace(/&(amp|lt|gt|quot|#39);/g, (_, e) => ({ amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'" })[e as string] ?? _);
+
 export default async function Blogs() {
     const articles = await getTopArticles();
 
-    if (articles.length === 0) return null;
+    const formatDate = (dateString: string) =>
+        new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-    const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
-            month: 'short', day: 'numeric', year: 'numeric'
-        });
-    };
+    if (articles.length === 0) {
+        return (
+            <p className="text-[15px] text-stone-700">
+                Articles are on <a href={PROFILE} target="_blank" rel="noreferrer noopener" className="ink-link">dev.to</a>.
+            </p>
+        );
+    }
 
     return (
         <div>
-            <ol className="divide-y divide-stone-200">
+            <ol className={`grid gap-8 ${COLS[articles.length] ?? COLS[3]} md:gap-0 md:divide-x md:divide-stone-300`}>
                 {articles.map((article) => (
-                    <li key={article.url} className="py-6 first:pt-0">
-                        <div className="flex gap-4 items-start">
+                    <li key={article.url} className="md:px-6 md:first:pl-0 md:last:pr-0">
+                        <article>
                             {article.cover_image && (
-                                <div className="flex-shrink-0 w-20 h-16 relative rounded border border-stone-200 overflow-hidden">
+                                <div className="relative mb-3 aspect-[1000/420] overflow-hidden border border-stone-900">
+                                    {/* Grayscale so dev.to covers read as newsprint photos. */}
                                     <Image
                                         src={article.cover_image}
-                                        alt={article.title}
+                                        alt=""
                                         fill
-                                        className="object-cover"
-                                        sizes="80px"
+                                        className="object-cover contrast-[1.1] grayscale"
+                                        sizes="(min-width: 768px) 540px, 100vw"
                                     />
                                 </div>
                             )}
-                            <div className="flex-1 min-w-0">
-                                <h3 className="font-serif text-[15px] font-bold leading-snug text-stone-900">
-                                    <a
-                                        href={article.url}
-                                        className="hover:text-amber-800 underline underline-offset-2 decoration-stone-300 hover:decoration-amber-800 transition-colors"
-                                        target="_blank"
-                                        rel="noreferrer noopener"
-                                    >
-                                        {article.title}
-                                    </a>
-                                </h3>
-                                <div className="mt-1 flex items-center gap-2 font-mono text-[11px] text-stone-400">
-                                    <span>{formatDate(article.published_at)}</span>
-                                    <span>·</span>
-                                    <span>{article.reading_time_minutes} min read</span>
-                                    {article.public_reactions_count > 0 && (
-                                        <>
-                                            <span className="hidden sm:inline">·</span>
-                                            <span className="hidden sm:inline">{article.public_reactions_count} reactions</span>
-                                        </>
-                                    )}
-                                </div>
-                                <p className="mt-1.5 text-xs leading-relaxed text-stone-500 line-clamp-2">{article.description}</p>
-                                <div className="mt-2 flex flex-wrap gap-1.5">
-                                    {article.tag_list.slice(0, 4).map((tag) => (
-                                        <span key={tag} className="text-[10px] text-stone-400 font-mono">#{tag}</span>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
+                            <h3 className="font-serif text-lg font-bold leading-snug text-stone-900">
+                                <a href={article.url} target="_blank" rel="noreferrer noopener" className="hover:text-amber-800">
+                                    {article.title}
+                                </a>
+                            </h3>
+                            <p className="mt-1.5 font-mono text-[11px] text-stone-600">
+                                {formatDate(article.published_at)} · {article.reading_time_minutes} min read
+                            </p>
+                            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-stone-700">{decode(article.description)}</p>
+                        </article>
                     </li>
                 ))}
             </ol>
-            <div className="mt-6">
-                <a
-                    href="https://dev.to/vaishnavghenge"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="text-sm text-stone-500 hover:text-amber-800 underline underline-offset-2 decoration-stone-300 hover:decoration-amber-800 transition-colors"
-                >
-                    View all articles →
-                </a>
-            </div>
+            <a
+                href={PROFILE}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="rubric mt-8 inline-flex text-stone-900 underline decoration-stone-400 underline-offset-4 hover:text-amber-800 hover:decoration-amber-800"
+            >
+                All articles on dev.to ↗
+            </a>
         </div>
     );
 }

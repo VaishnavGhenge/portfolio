@@ -11,7 +11,7 @@
 html {
     scroll-behavior: smooth;
     /* keep sticky nav from covering anchored headings */
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 4rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -32,11 +32,11 @@ body {
     color: var(--ink);
 }
 
-/* Editorial drop cap — opens the first column of prose. */
+/* Editorial drop cap: opens the lead story. */
 .dropcap::first-letter {
     float: left;
     font-family: var(--font-playfair), Georgia, serif;
-    font-size: 3.25em;
+    font-size: 3.4em;
     line-height: 0.82;
     font-weight: 700;
     padding-right: 0.09em;
@@ -44,12 +44,64 @@ body {
     color: var(--ink);
 }
 
-/* Small-caps rubric used for section numbers and labels. */
+/* Small-caps rubric used for kickers, labels and page markers. */
 .rubric {
     font-family: var(--font-plex-mono), ui-monospace, monospace;
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
+}
+
+@layer components {
+    .ink-link {
+        @apply text-stone-900 underline decoration-stone-300 underline-offset-2 transition-colors hover:text-amber-800 hover:decoration-amber-800;
+    }
+
+    .tag {
+        @apply rounded-sm border border-stone-300 bg-white px-2 py-0.5 font-mono text-[11px] text-stone-600;
+    }
+}
+
+/* ── Feature figures ───────────────────────────────────────────────────── */
+
+@keyframes fig-flow {
+    0%   { transform: translateX(0);     opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateX(220px); opacity: 0; }
+}
+
+@keyframes fig-cpu {
+    0%, 100% { width: 8%; }
+    25%      { width: 22%; }
+    50%      { width: 11%; }
+    75%      { width: 19%; }
+}
+
+@keyframes fig-mem {
+    0%, 100% { width: 34%; }
+    25%      { width: 38%; }
+    50%      { width: 36%; }
+    75%      { width: 40%; }
+}
+
+@keyframes fig-blink {
+    0%, 49%   { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+.fig-flow      { animation: fig-flow 3.2s ease-in-out infinite; }
+.fig-cpu       { animation: fig-cpu 5s ease-in-out infinite; }
+.fig-mem       { animation: fig-mem 5s ease-in-out infinite; }
+.fig-blink     { animation: fig-blink 1.1s step-end infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+    .fig-flow,
+    .fig-cpu,
+    .fig-mem,
+    .fig-blink { animation: none; }
+    .fig-cpu { width: 14%; }
+    .fig-mem { width: 36%; }
 }
 
 /* ── Duck companion ────────────────────────────────────────────────────── */

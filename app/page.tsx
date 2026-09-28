@@ -1,32 +1,36 @@
-import About from '@/components/about';
-import Experience from '@/components/experience';
+import FrontPage from '@/components/FrontPage';
 import Projects from '@/components/projects';
+import Markets from '@/components/Markets';
 import Blogs from '@/components/blogs';
-import SkillGrid, { SkillLegend } from '@/components/SkillGrid';
-import EditorialCartoon from '@/components/EditorialCartoon';
+import ComicStrip from '@/components/ComicStrip';
+import Classifieds from '@/components/Classifieds';
+
+/** A newspaper section flag: name on the left, page marker on the right. */
+function SectionFlag({ id, title, page }: { id: string; title: string; page: string }) {
+    return (
+        <div className="mb-8 flex items-baseline justify-between border-b border-stone-900 pb-2">
+            <h2 id={`${id}-title`} className="font-serif text-3xl font-black tracking-tight text-stone-900 sm:text-4xl">
+                {title}
+            </h2>
+            <span className="rubric text-stone-600">Page {page}</span>
+        </div>
+    );
+}
 
 function Section({
     id,
-    number,
     title,
-    aside,
+    page,
     children,
 }: {
     id: string;
-    number: string;
     title: string;
-    aside?: React.ReactNode;
+    page: string;
     children: React.ReactNode;
 }) {
     return (
-        <section id={id} className="scroll-mt-24">
-            <div className="mb-7 flex flex-wrap items-baseline gap-x-3 gap-y-1.5 border-b border-stone-900 pb-2">
-                <span className="rubric text-amber-800">{number}</span>
-                <h2 className="font-serif text-base font-bold uppercase tracking-[0.18em] text-stone-900">
-                    {title}
-                </h2>
-                {aside && <div className="ml-auto">{aside}</div>}
-            </div>
+        <section id={id} aria-labelledby={`${id}-title`} className="border-t-[3px] border-double border-stone-900 pt-6">
+            <SectionFlag id={id} title={title} page={page} />
             {children}
         </section>
     );
@@ -35,28 +39,28 @@ function Section({
 export default function Page() {
     return (
         <div className="space-y-20">
-            <Section id="about" number="01" title="About">
-                <About />
-            </Section>
+            <section id="front" aria-label="Front page">
+                <FrontPage />
+            </section>
 
-            <Section id="experience" number="02" title="Experience">
-                <Experience />
-            </Section>
-
-            <Section id="projects" number="03" title="Featured Projects">
+            <Section id="features" title="Features" page="A2">
                 <Projects />
             </Section>
 
-            <Section id="skills" number="04" title="Technical Skills" aside={<SkillLegend />}>
-                <SkillGrid />
+            <Section id="markets" title="Markets" page="B1">
+                <Markets />
             </Section>
 
-            <Section id="blogs" number="05" title="Recent Writing">
+            <Section id="opinion" title="Opinion" page="C1">
                 <Blogs />
             </Section>
 
-            <Section id="editorial" number="06" title="Editorial">
-                <EditorialCartoon />
+            <Section id="comics" title="Comics" page="D1">
+                <ComicStrip />
+            </Section>
+
+            <Section id="classifieds" title="Classifieds" page="D2">
+                <Classifieds />
             </Section>
         </div>
     );

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Newsreader, Playfair_Display, IBM_Plex_Mono } from "next/font/google";
+import { Newsreader, Playfair_Display, IBM_Plex_Mono, UnifrakturMaguntia } from "next/font/google";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react"
-import HeroContent from "@/components/HeroContent";
+import Masthead from "@/components/Masthead";
 import Footer from "@/components/Footer";
 import SectionNav from "@/components/SectionNav";
 import DuckCompanion from "@/components/DuckCompanion";
@@ -11,20 +11,27 @@ import DuckCompanion from "@/components/DuckCompanion";
 const playfair = Playfair_Display({
     subsets: ["latin"],
     variable: "--font-playfair",
-    weight: ["400", "600", "700", "800"],
+    // Variable font: one file covers every weight, including the 900 nameplate.
 });
 
 const newsreader = Newsreader({
     subsets: ["latin"],
     variable: "--font-newsreader",
-    weight: ["300", "400", "500", "600"],
-    style: ["normal", "italic"],
+    // Upright only: the italic file cost ~0.3 s of mobile LCP for two lines of text.
+    style: ["normal"],
+});
+
+// Blackletter for the nameplate only, as on a broadsheet masthead.
+const blackletter = UnifrakturMaguntia({
+    subsets: ["latin"],
+    variable: "--font-blackletter",
+    weight: "400",
 });
 
 const plexMono = IBM_Plex_Mono({
     subsets: ["latin"],
     variable: "--font-plex-mono",
-    weight: ["400", "500", "600"],
+    weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -57,12 +64,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className={`${newsreader.variable} ${playfair.variable} ${plexMono.variable} font-sans antialiased`}>
+            <body className={`${newsreader.variable} ${playfair.variable} ${plexMono.variable} ${blackletter.variable} font-sans antialiased`}>
                 <SpeedInsights />
                 <Analytics />
-                <div className="mx-auto max-w-2xl px-6 pb-16 pt-16 lg:pt-24">
-                    <header className="mb-10">
-                        <HeroContent />
+                <div className="mx-auto max-w-6xl px-4 pb-10 pt-8 sm:px-6 lg:pt-12">
+                    <header>
+                        <Masthead />
                     </header>
                     <SectionNav />
                     <main>

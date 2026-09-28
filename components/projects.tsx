@@ -1,189 +1,57 @@
-"use client";
+// ─── Figures ──────────────────────────────────────────────────────────────────
+// Ink-on-paper diagrams. Motion is plain CSS (see globals.css) and switches off
+// under prefers-reduced-motion.
 
-import { motion } from 'framer-motion';
+const INK = "#1c1917";
+const RULE = "#a8a29e";
+const ACCENT = "#9a3412";
 
-// ─── Highlight Visuals ────────────────────────────────────────────────────────
-
-function VartalaapP2P() {
-    const peerA = { x: 30, y: 48 };
-    const peerB = { x: 198, y: 48 };
-    const midX = 114;
-
-    const features = [
-        { label: "Noise Cancel", color: "#a78bfa", y: 14 },
-        { label: "Echo Cancel",  color: "#60a5fa", y: 50 },
-        { label: "BG Blur",      color: "#2dd4bf", y: 86 },
+function SessionlyFigure() {
+    const steps = [
+        { x: 6,   title: "Your hours",  sub: "+ Google Calendar" },
+        { x: 116, title: "Client books", sub: "in their timezone" },
+        { x: 226, title: "Private room", sub: "via Cloudflare SFU" },
     ];
 
     return (
-        <div className="flex items-center justify-center w-full py-2">
-            <svg width="100%" viewBox="0 0 260 120" fill="none">
-                {/* Direct P2P connection line */}
-                <line
-                    x1={peerA.x + 22} y1={peerA.y}
-                    x2={peerB.x}      y2={peerB.y}
-                    stroke="rgba(148,163,184,0.12)" strokeWidth="1.5" strokeDasharray="4 3"
-                />
+        <svg viewBox="0 0 320 110" className="w-full" role="img" aria-labelledby="fig-sessionly">
+            <title id="fig-sessionly">
+                Booking flow: you set weekly hours synced with Google Calendar, a client books a time in their own timezone, and the booking opens a private video room joined from the browser.
+            </title>
 
-                {/* Animated packets A → B */}
-                {[0, 1].map(i => (
-                    <motion.circle
-                        key={`ab-${i}`}
-                        cx={peerA.x + 22} cy={peerA.y} r={3}
-                        fill="#60a5fa"
-                        animate={{
-                            x: [0, peerB.x - (peerA.x + 22)],
-                            opacity: [0, 1, 0.9, 0],
-                        }}
-                        transition={{
-                            duration: 1.2,
-                            repeat: Infinity,
-                            repeatDelay: 1.8,
-                            delay: i * 1.0,
-                            ease: "easeInOut",
-                        }}
-                    />
-                ))}
+            {/* Connectors, with a marker travelling the whole flow */}
+            <path d="M94 55 H116 M204 55 H226" stroke={INK} strokeWidth="1.2" />
+            <path d="M110 51 L116 55 L110 59 M220 51 L226 55 L220 59" fill="none" stroke={INK} strokeWidth="1.2" />
+            <circle cx="50" cy="86" r="2.8" fill={ACCENT} className="fig-flow" />
+            <line x1="50" y1="86" x2="270" y2="86" stroke={RULE} strokeWidth="1" strokeDasharray="2 3" />
 
-                {/* Animated packets B → A */}
-                {[0, 1].map(i => (
-                    <motion.circle
-                        key={`ba-${i}`}
-                        cx={peerB.x} cy={peerB.y} r={3}
-                        fill="#a78bfa"
-                        animate={{
-                            x: [0, (peerA.x + 22) - peerB.x],
-                            opacity: [0, 1, 0.9, 0],
-                        }}
-                        transition={{
-                            duration: 1.2,
-                            repeat: Infinity,
-                            repeatDelay: 1.8,
-                            delay: 0.5 + i * 1.0,
-                            ease: "easeInOut",
-                        }}
-                    />
-                ))}
-
-                {/* Peer A */}
-                <rect x={peerA.x - 22} y={peerA.y - 18} width={44} height={36} rx={6}
-                    fill="rgba(15,23,42,0.9)" stroke="rgba(96,165,250,0.4)" strokeWidth="1.2"
-                />
-                <text x={peerA.x} y={peerA.y - 4} textAnchor="middle"
-                    fill="#60a5fa" fontSize="9" fontFamily="monospace" fontWeight="700"
-                >You</text>
-                <text x={peerA.x} y={peerA.y + 9} textAnchor="middle"
-                    fill="#334155" fontSize="6" fontFamily="monospace"
-                >HD · 1080p</text>
-
-                {/* Peer B */}
-                <rect x={peerB.x - 22} y={peerB.y - 18} width={44} height={36} rx={6}
-                    fill="rgba(15,23,42,0.9)" stroke="rgba(167,139,250,0.4)" strokeWidth="1.2"
-                />
-                <text x={peerB.x} y={peerB.y - 4} textAnchor="middle"
-                    fill="#a78bfa" fontSize="9" fontFamily="monospace" fontWeight="700"
-                >Them</text>
-                <text x={peerB.x} y={peerB.y + 9} textAnchor="middle"
-                    fill="#334155" fontSize="6" fontFamily="monospace"
-                >HD · 1080p</text>
-
-                {/* Feature pills */}
-                {features.map((f, i) => (
-                    <motion.g key={f.label}
-                        initial={{ opacity: 0, x: -4 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3 + i * 0.2 }}
-                    >
-                        <rect x={midX - 30} y={f.y} width={60} height={12} rx={6}
-                            fill={`${f.color}15`} stroke={`${f.color}35`} strokeWidth="0.8"
-                        />
-                        <motion.circle cx={midX - 20} cy={f.y + 6} r={2}
-                            fill={f.color}
-                            animate={{ opacity: [0.4, 1, 0.4] }}
-                            transition={{ duration: 1.8, repeat: Infinity, delay: i * 0.4 }}
-                        />
-                        <text x={midX - 13} y={f.y + 9} textAnchor="start"
-                            fill={f.color} fontSize="6.5" fontFamily="monospace"
-                        >{f.label}</text>
-                    </motion.g>
-                ))}
-
-                {/* Screen share badge */}
-                <motion.g
-                    animate={{ opacity: [0.5, 1, 0.5] }}
-                    transition={{ duration: 2.5, repeat: Infinity }}
-                >
-                    <rect x={midX - 24} y={106} width={48} height={11} rx={5.5}
-                        fill="rgba(45,212,191,0.08)" stroke="rgba(45,212,191,0.25)" strokeWidth="0.8"
-                    />
-                    <text x={midX} y={113.5} textAnchor="middle"
-                        fill="#2dd4bf" fontSize="6" fontFamily="monospace"
-                    >screen share</text>
-                </motion.g>
-            </svg>
-        </div>
+            {steps.map((st, i) => (
+                <g key={st.title}>
+                    <rect x={st.x} y="30" width="88" height="50" fill="#fff" stroke={INK} strokeWidth={i === 2 ? 2 : 1.3} />
+                    <text x={st.x + 44} y="50" textAnchor="middle" fontFamily="Georgia, serif" fontSize="11" fontWeight="700" fill={INK}>{st.title}</text>
+                    <text x={st.x + 44} y="64" textAnchor="middle" fontFamily="monospace" fontSize="6.5" fill="#57534e">{st.sub}</text>
+                    <text x={st.x + 44} y="22" textAnchor="middle" fontFamily="monospace" fontSize="7" fill={ACCENT}>{i + 1}</text>
+                </g>
+            ))}
+        </svg>
     );
 }
 
-function ServioDeployFlow() {
-    const logs = [
-        { text: "[●] api-gateway.service", color: "#4ade80" },
-        { text: "    Active: active (running)", color: "#475569" },
-        { text: "    D-Bus: connected to systemd", color: "#475569" },
-        { text: "    Logs: streaming via journald", color: "#2dd4bf" },
-    ];
-
+function ServioFigure() {
     return (
-        <div className="font-mono text-[10px] p-3 w-full">
-            {/* Terminal chrome */}
-            <div className="flex items-center gap-1.5 mb-2.5 pb-2 border-b border-stone-700/40">
-                <div className="w-2 h-2 rounded-full bg-red-400/60" />
-                <div className="w-2 h-2 rounded-full bg-amber-400/60" />
-                <div className="w-2 h-2 rounded-full bg-green-400/60" />
-                <span className="ml-1.5 text-stone-600 text-[9px]">servio — journald</span>
-                <motion.div
-                    className="ml-auto w-1.5 h-1.5 rounded-full bg-green-400"
-                    animate={{ opacity: [1, 0.3, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                />
-            </div>
+        <div className="px-4 py-3 font-mono text-[11px] leading-relaxed text-stone-800" role="img" aria-label="Servio status output: api-gateway service active and streaming logs from journald, with live CPU and memory meters.">
+            <p className="text-stone-600">$ servio status api-gateway</p>
+            <p className="mt-1"><span className="text-amber-800">●</span> api-gateway.service</p>
+            <p className="pl-3">Active: <span className="font-medium">active (running)</span></p>
+            <p className="pl-3">D-Bus:&nbsp; connected to systemd</p>
+            <p className="pl-3">Logs:&nbsp;&nbsp; streaming from journald <span className="fig-blink">▋</span></p>
 
-            {/* Log lines */}
-            <div className="space-y-1 mb-2.5">
-                {logs.map((line, i) => (
-                    <motion.div
-                        key={i}
-                        initial={{ opacity: 0, x: -8 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.28, duration: 0.25 }}
-                        style={{ color: line.color }}
-                    >
-                        {line.text}
-                    </motion.div>
-                ))}
-                {/* Blinking cursor */}
-                <motion.span
-                    className="text-stone-500"
-                    animate={{ opacity: [1, 0, 1] }}
-                    transition={{ duration: 1.1, repeat: Infinity }}
-                >▋</motion.span>
-            </div>
-
-            {/* CPU / MEM bars */}
-            <div className="space-y-1.5 pt-2 border-t border-stone-800/60">
-                {[
-                    { label: "CPU", color: "#a78bfa", values: ["8%", "22%", "11%", "19%", "8%"] },
-                    { label: "MEM", color: "#60a5fa", values: ["34%", "38%", "36%", "40%", "34%"] },
-                ].map(bar => (
-                    <div key={bar.label} className="flex items-center gap-2">
-                        <span className="text-stone-600 w-6 shrink-0">{bar.label}</span>
-                        <div className="flex-1 h-1 bg-stone-800 rounded-full overflow-hidden">
-                            <motion.div
-                                className="h-full rounded-full"
-                                style={{ backgroundColor: bar.color + "99" }}
-                                animate={{ width: bar.values }}
-                                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                            />
+            <div className="mt-3 space-y-1.5 border-t border-stone-300 pt-2.5">
+                {[{ label: "CPU", cls: "fig-cpu" }, { label: "MEM", cls: "fig-mem" }].map((m) => (
+                    <div key={m.label} className="flex items-center gap-2">
+                        <span className="w-7 shrink-0 text-stone-600">{m.label}</span>
+                        <div className="h-1.5 flex-1 bg-stone-200">
+                            <div className={`h-full bg-stone-800 ${m.cls}`} />
                         </div>
                     </div>
                 ))}
@@ -192,187 +60,150 @@ function ServioDeployFlow() {
     );
 }
 
-function DjangoSilkyHighlight() {
-    const queries = [
-        { label: '/api/users/', time: '240ms', pct: 85, color: '#f97316' },
-        { label: '/api/posts/', time: '38ms',  pct: 30, color: '#2dd4bf' },
-        { label: '/api/tags/',  time: '12ms',  pct: 12, color: '#2dd4bf' },
+function SilkyFigure() {
+    const requests = [
+        { path: "/api/users/", ms: 240, slow: true  },
+        { path: "/api/posts/", ms: 38,  slow: false },
+        { path: "/api/tags/",  ms: 12,  slow: false },
     ];
     const flame = [
-        { label: 'ORM',  flex: 0.45, color: '#f97316' },
-        { label: 'N+1',  flex: 0.30, color: '#ef4444' },
-        { label: 'Ser',  flex: 0.10, color: '#60a5fa' },
-        { label: 'Net',  flex: 0.08, color: '#475569' },
+        { label: "ORM", share: 45, hatch: false },
+        { label: "N+1", share: 30, hatch: true  },
+        { label: "Ser", share: 13, hatch: false },
+        { label: "Net", share: 12, hatch: false },
     ];
 
     return (
-        <div className="font-mono text-[10px] p-3 w-full">
-            <div className="flex items-center justify-between mb-2 pb-2 border-b border-stone-700/50">
-                <span className="text-amber-400 font-bold">django-silky</span>
-                <div className="flex items-center gap-1.5">
-                    <span className="text-stone-500 text-[9px]">dark</span>
-                    <div className="w-7 h-3.5 rounded-full bg-amber-500/30 relative flex items-center px-0.5">
-                        <motion.div
-                            className="w-2.5 h-2.5 rounded-full bg-amber-400 absolute"
-                            animate={{ x: [0, 14, 0] }}
-                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                        />
-                    </div>
-                </div>
-            </div>
-
-            {/* Query waterfall */}
-            <div className="space-y-1.5 mb-2.5">
-                {queries.map((q, i) => (
-                    <div key={q.label} className="flex items-center gap-2">
-                        <span className="text-stone-500 w-16 truncate shrink-0">{q.label}</span>
-                        <div className="flex-1 h-1.5 bg-stone-800 rounded-full overflow-hidden">
-                            <motion.div
-                                initial={{ width: 0 }}
-                                animate={{ width: `${q.pct}%` }}
-                                transition={{ duration: 1.2, delay: i * 0.18, ease: "easeOut" }}
-                                style={{ backgroundColor: q.color }}
-                                className="h-full rounded-full"
-                            />
+        <div className="px-4 py-3 font-mono text-[11px] text-stone-800" role="img" aria-label="django-silky request timings: /api/users/ takes 240 ms, 30% of it in an N+1 query pattern.">
+            <div className="space-y-1.5">
+                {requests.map((r) => (
+                    <div key={r.path} className="flex items-center gap-2">
+                        <span className="w-[78px] shrink-0 text-stone-600">{r.path}</span>
+                        <div className="h-1.5 flex-1 bg-stone-200">
+                            <div className={`h-full ${r.slow ? "bg-amber-800" : "bg-stone-800"}`} style={{ width: `${(r.ms / 280) * 100}%` }} />
                         </div>
-                        <span className="text-stone-400 shrink-0 w-10 text-right">{q.time}</span>
+                        <span className="w-11 shrink-0 text-right">{r.ms}ms</span>
                     </div>
                 ))}
             </div>
 
-            {/* Flame chart */}
-            <div className="text-[9px] text-stone-600 mb-1">flame · /api/users/</div>
-            <div className="flex h-3.5 gap-px mb-2.5 overflow-hidden rounded-sm">
-                {flame.map((seg, i) => (
-                    <motion.div
-                        key={i}
-                        className="h-full flex items-center justify-center overflow-hidden"
+            <p className="mt-3 text-[10px] text-stone-600">flame · /api/users/</p>
+            <div className="mt-1 flex h-4 gap-px border border-stone-800">
+                {flame.map((f) => (
+                    <div
+                        key={f.label}
+                        className={`flex items-center justify-center text-[9px] ${f.hatch ? "text-amber-900" : "bg-stone-100 text-stone-700"}`}
                         style={{
-                            flex: seg.flex,
-                            backgroundColor: `${seg.color}1a`,
-                            borderTop: `2px solid ${seg.color}70`,
-                            transformOrigin: "left center",
+                            flexBasis: `${f.share}%`,
+                            backgroundImage: f.hatch ? "repeating-linear-gradient(135deg, rgba(154,52,18,0.22) 0 2px, transparent 2px 5px)" : undefined,
                         }}
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: 1 }}
-                        transition={{ duration: 0.7, delay: 0.6 + i * 0.12, ease: "easeOut" }}
                     >
-                        <span style={{ color: seg.color + "cc", fontSize: 7 }}>{seg.label}</span>
-                    </motion.div>
+                        {f.label}
+                    </div>
                 ))}
             </div>
 
-            {/* N+1 badge */}
-            <motion.div
-                animate={{ opacity: [1, 0.55, 1] }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-                className="inline-flex items-center gap-1 text-[9px] text-orange-400 border border-orange-400/30 px-1.5 py-0.5 rounded bg-orange-400/5"
-            >
-                ⚠ N+1 detected · /api/users/
-            </motion.div>
+            <p className="mt-2.5 inline-block border border-amber-800 px-1.5 py-0.5 text-[10px] text-amber-900">
+                N+1 detected · /api/users/
+            </p>
         </div>
     );
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
+// ─── Stories ──────────────────────────────────────────────────────────────────
+
+const stories = [
+    {
+        name: "Sessionly",
+        formerly: "Vartalaap",
+        url: "https://getsessionly.com/",
+        linkLabel: "Open beta",
+        headline: "A booking page with the video call built in",
+        body:
+            "Sessionly puts scheduling and the call behind one link. You set weekly hours and sync Google Calendar; clients pick a time in their own timezone and get a private video room for that booking, joined from the browser. Media runs through Cloudflare acting as an SFU rather than peer to peer. No separate video app, no client account.",
+        figure: <SessionlyFigure />,
+        caption: "One link covers the booking and the call.",
+        question: "Why build the call into the booking page?",
+        answer:
+            "Every extra app or sign-up is a chance for a client not to show. Booking a time should be the only step; the room comes with it.",
+        tech: ["WebRTC", "Cloudflare", "SFU", "Google Calendar"],
+    },
+    {
+        name: "Servio",
+        url: "https://github.com/VaishnavGhenge/servio",
+        linkLabel: "Source on GitHub",
+        headline: "Systemd gets a dashboard: start, stop, tail logs, deploy on push",
+        body:
+            "A web GUI for Linux servers that talks to systemd over D-Bus: start and stop services, follow journald logs live, edit environment variables. A Git-integrated pipeline rebuilds and reloads a service on every push.",
+        figure: <ServioFigure />,
+        caption: "Service state and logs come straight from systemd over D-Bus.",
+        question: "Why Go over Node.js or Python?",
+        answer:
+            "Direct D-Bus bindings for systemd, and goroutines to stream logs from many services at once, shipped as a single binary with no runtime to install.",
+        tech: ["Go", "systemd", "D-Bus", "WebSockets", "React", "SQLite"],
+    },
+    {
+        name: "django-silky",
+        url: "https://pypi.org/project/django-silky/",
+        linkLabel: "On PyPI",
+        headline: "Profiler fork ships dark mode, D3 charts and N+1 detection",
+        body:
+            "A modernized fork of the django-silk profiler: persistent dark and light themes, an inline filter bar, D3 analytics dashboards, N+1 query detection with endpoint attribution, and self-hosted icons with no CDN calls. A drop-in replacement with no new migrations.",
+        figure: <SilkyFigure />,
+        caption: "The slow endpoint, and the N+1 pattern inside it, flagged per request.",
+        question: "Why fork instead of contributing upstream?",
+        answer:
+            "Theming, D3 analytics and self-hosted assets meant architectural rewrites, not patches. Upstream review would have taken weeks; the fork shipped in a day.",
+        tech: ["Python", "Django", "D3.js", "CSS custom properties", "PostgreSQL"],
+    },
+];
 
 export default function Projects() {
-    const projects = [
-        {
-            title: "Vartalaap",
-            url: "https://vartalaap.vaishnavghenge.com/",
-            subtitle: "HD Video Calling with Real-Time Media Processing",
-            description:
-                "Built a high-quality P2P video call app focused on call reliability and media fidelity. Features HD 1080p video, background blur and virtual backgrounds via MediaPipe, screen sharing, acoustic echo cancellation, and background noise suppression — tackling the exact frustrations people have with mainstream video apps. Signaling handled by a lightweight Go WebSocket server with zero dependencies.",
-            tech: ["Next.js", "Go", "WebRTC", "MediaPipe", "simple-peer", "WebSockets", "Zustand"],
-            highlight: <VartalaapP2P />,
-            engineeringDecision: "Why Go for signaling? Needed a single self-contained binary that handles concurrent WebSocket connections without a runtime or framework. Go's stdlib covers it entirely — no Node, no Python, no external dependencies on the critical signaling path.",
-        },
-        {
-            title: "Servio",
-            url: "https://github.com/VaishnavGhenge/servio",
-            subtitle: "GUI-Based Systemd Service Manager",
-            description:
-                "Built a visually rich Web GUI for orchestrating Linux servers, replacing command-line fatigue with a modern dashboard. Directly interfaces with Systemd via D-Bus to start/stop services, view real-time journald logs, and manage environment variables. Includes a Git-integrated deployment pipeline that automatically builds and reloads services on push.",
-            tech: ["Go (Golang)", "Linux Systemd", "WebSockets", "React UI", "SQLite", "D-Bus"],
-            highlight: <ServioDeployFlow />,
-            engineeringDecision: "Why Go over Node.js or Python? Needed a single self-contained binary with no runtime dependencies, direct D-Bus bindings for Systemd, and native goroutines for concurrent log streaming across multiple services. Go's stdlib handles all of this without a single external dependency.",
-        },
-        {
-            title: "django-silky",
-            url: "https://pypi.org/project/django-silky/",
-            subtitle: "Production-Quality Fork of django-silk",
-            description:
-                "Forked the popular django-silk profiling library and shipped a fully modernized version: persistent dark/light theming, inline collapsible filter bar, D3.js analytics dashboards, N+1 query detection with endpoint attribution, and self-hosted icons (zero CDN dependencies). Drop-in replacement — no new migrations required.",
-            tech: ["Python", "Django", "D3.js", "CSS Custom Properties", "PostgreSQL"],
-            highlight: <DjangoSilkyHighlight />,
-            engineeringDecision: "Why fork instead of contributing upstream? The changes required architectural rewrites — CSS variables for theming, D3 for analytics, self-hosted assets. Getting that through upstream review would take weeks. Forking let me ship in one day and write about it.",
-        },
-    ];
-
     return (
-        <ol className="space-y-14">
-            {projects.map((project, i) => (
-                <li key={project.title}>
-                    <div className="flex items-baseline gap-3">
-                        <span className="rubric text-stone-300">
-                            {String(i + 1).padStart(2, "0")}
-                        </span>
-                        <h3 className="font-serif text-lg font-bold text-stone-900">
-                            <a
-                                href={project.url}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="underline decoration-stone-300 underline-offset-4 transition-colors hover:text-amber-800 hover:decoration-amber-800"
-                            >
-                                {project.title}
-                            </a>
-                            <span aria-hidden="true" className="ml-1 text-sm text-stone-400">↗</span>
-                        </h3>
-                    </div>
-
-                    {project.subtitle && (
-                        <p className="mt-1.5 text-[11px] font-medium uppercase tracking-[0.16em] text-stone-500">
-                            {project.subtitle}
-                        </p>
-                    )}
-
-                    <p className="mt-3 text-[15px] leading-relaxed text-stone-600">
-                        {project.description}
+        <div className="grid gap-12 lg:grid-cols-3 lg:gap-0 lg:divide-x lg:divide-stone-300">
+            {stories.map((s, i) => (
+                <article key={s.name} className="flex flex-col lg:px-6 lg:first:pl-0 lg:last:pr-0">
+                    <p className="rubric text-amber-800">
+                        {s.name}
+                        {s.formerly && <span className="text-stone-600"> · formerly {s.formerly}</span>}
                     </p>
+                    <h3 className="mt-2 font-serif text-2xl font-bold leading-tight text-stone-900">
+                        <a href={s.url} target="_blank" rel="noreferrer" className="hover:text-amber-800">
+                            {s.headline}
+                        </a>
+                    </h3>
 
-                    {/* Technical highlight — full-width figure so the diagram is legible.
-                        Inner max-width keeps the small mono type at a comfortable measure. */}
-                    <figure className="mt-5 overflow-hidden rounded-sm border border-stone-800 bg-stone-900 shadow-sm">
-                        <div className="mx-auto w-full max-w-[540px] px-2 py-4">
-                            {project.highlight}
-                        </div>
-                        <figcaption className="border-t border-stone-800 bg-black/30 px-3 py-2 text-center">
-                            <span className="rubric text-stone-500">Technical Highlight</span>
+                    <p className="mt-3 text-[15px] leading-relaxed text-stone-700">{s.body}</p>
+
+                    <figure className="mt-5 border border-stone-900 bg-white">
+                        <div className="flex min-h-[140px] items-center">{s.figure}</div>
+                        <figcaption className="border-t border-stone-300 px-3 py-2 text-xs leading-snug text-stone-700">
+                            <span className="rubric text-stone-900">Fig. {i + 1}</span>{" "}
+                            {s.caption}
                         </figcaption>
                     </figure>
 
-                    {project.engineeringDecision && (
-                        <div className="mt-5 border-l-2 border-amber-800/40 py-1 pl-4">
-                            <p className="rubric mb-1 text-amber-800/70">Engineering Decision</p>
-                            <p className="text-[13px] leading-relaxed text-stone-500">
-                                {project.engineeringDecision}
-                            </p>
-                        </div>
-                    )}
+                    <blockquote className="mt-5 border-l-2 border-amber-800 pl-4">
+                        <p className="font-serif text-base font-bold text-stone-900">{s.question}</p>
+                        <p className="mt-1 text-sm leading-relaxed text-stone-700">{s.answer}</p>
+                    </blockquote>
 
-                    <div className="mt-4 flex flex-wrap gap-1.5">
-                        {project.tech.map((tech) => (
-                            <span
-                                key={tech}
-                                className="rounded-sm border border-stone-300 bg-white px-2 py-0.5 font-mono text-[11px] text-stone-600"
-                            >
-                                {tech}
-                            </span>
+                    <ul className="mt-5 flex flex-wrap gap-1.5" aria-label={`${s.name} stack`}>
+                        {s.tech.map((t) => (
+                            <li key={t} className="tag">{t}</li>
                         ))}
-                    </div>
-                </li>
+                    </ul>
+
+                    <a
+                        href={s.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="rubric mt-auto inline-flex self-start pt-5 text-stone-900 underline decoration-stone-400 underline-offset-4 hover:text-amber-800 hover:decoration-amber-800"
+                    >
+                        {s.linkLabel} ↗
+                    </a>
+                </article>
             ))}
-        </ol>
+        </div>
     );
 }

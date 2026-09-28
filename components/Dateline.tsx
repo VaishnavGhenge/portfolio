@@ -32,8 +32,8 @@ export default function Dateline() {
     }, []);
 
     return (
-        <span className="rubric text-stone-400" suppressHydrationWarning>
-            {stamp ?? "Est. 2018 · Pune, IN"}
+        <span className="rubric text-stone-600" suppressHydrationWarning>
+            {stamp ?? "Today's edition"}
         </span>
     );
 }
