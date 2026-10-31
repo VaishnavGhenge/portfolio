@@ -2,10 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Paper and ink. The page is a sheet of newsprint lying on a desk: warm
+ * off-white stock, fine grain, edges that have yellowed a little, and ink that
+ * spreads slightly into the fibres.
+ */
 :root {
-    --paper: #faf8f4;
-    --ink: #1c1917;
+    --paper: #f4efe3;
+    --paper-shade: #ebe4d3;
+    --desk: #ddd6c6;
+    --ink: #1a1714;
     --accent: #9a3412;
+    /* Paper grain: an 180px tile of fractal noise, multiplied over the stock. */
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .22 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 html {
@@ -20,11 +29,83 @@ html {
 
 body {
     background-color: var(--paper);
-    background-image: radial-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px);
-    background-size: 24px 24px;
+    background-image: var(--grain);
     color: var(--ink);
     font-optical-sizing: auto;
     text-rendering: optimizeLegibility;
+}
+
+/* On wide screens the paper sits on a desk, so it reads as one physical sheet. */
+@media (min-width: 1024px) {
+    body {
+        background-color: var(--desk);
+        background-image: var(--grain);
+    }
+}
+
+.sheet {
+    background-color: var(--paper);
+    background-image:
+        var(--grain),
+        /* faint long-grain fibres */
+        repeating-linear-gradient(93deg, rgba(120, 100, 60, 0.018) 0 1px, transparent 1px 7px);
+}
+
+@media (min-width: 1024px) {
+    .sheet {
+        box-shadow:
+            /* yellowed edges */
+            inset 0 0 70px rgba(150, 120, 60, 0.13),
+            inset 0 0 12px rgba(150, 120, 60, 0.12),
+            /* lift off the desk */
+            0 1px 2px rgba(40, 30, 10, 0.12),
+            0 12px 32px -8px rgba(40, 30, 10, 0.28);
+    }
+}
+
+/* Horizontal fold of a broadsheet: everything above it is the front page. */
+.fold {
+    height: 22px;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(60, 45, 20, 0.05) 40%,
+        rgba(60, 45, 20, 0.10) 50%,
+        rgba(255, 252, 240, 0.55) 54%,
+        transparent 100%
+    );
+}
+
+/* Ink spread: headline type picks up a hair of bleed, like ink on absorbent stock. */
+.ink {
+    text-shadow: 0 0 0.6px rgba(26, 23, 20, 0.55);
+}
+
+/* Newspaper body copy: justified, hyphenated, so columns keep a straight edge. */
+.newsprint {
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    text-wrap: pretty;
+}
+
+/* Halftone screen over photos: a dot grid multiplied over grayscale. */
+.halftone {
+    position: relative;
+}
+.halftone::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(26, 23, 20, 0.32) 0.7px, transparent 1.3px);
+    background-size: 3px 3px;
+    mix-blend-mode: multiply;
+}
+
+/* Photos and figures print onto the paper rather than sit on top of it. */
+.printed {
+    mix-blend-mode: multiply;
 }
 
 ::selection {
@@ -58,7 +139,7 @@ body {
     }
 
     .tag {
-        @apply rounded-sm border border-stone-300 bg-white px-2 py-0.5 font-mono text-[11px] text-stone-600;
+        @apply border border-stone-400/70 px-2 py-0.5 font-mono text-[11px] text-stone-700;
     }
 }
 

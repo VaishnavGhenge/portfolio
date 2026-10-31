@@ -2,13 +2,15 @@
 
 import { useEffect, useState } from "react";
 
+// Plain words first: the newspaper section names live on the pages themselves,
+// so nobody has to guess that "Markets" means skills.
 const links = [
-    { href: "#front", label: "Front Page" },
-    { href: "#features", label: "Features" },
-    { href: "#markets", label: "Markets" },
-    { href: "#opinion", label: "Opinion" },
-    { href: "#comics", label: "Comics" },
-    { href: "#classifieds", label: "Classifieds" },
+    { href: "#front", label: "About", page: "A1" },
+    { href: "#features", label: "Projects", page: "A2" },
+    { href: "#markets", label: "Skills", page: "B1" },
+    { href: "#opinion", label: "Writing", page: "C1" },
+    { href: "#comics", label: "Comics", page: "D1" },
+    { href: "#classifieds", label: "Contact", page: "D2" },
 ];
 
 export default function SectionNav() {
@@ -57,7 +59,7 @@ export default function SectionNav() {
     return (
         <nav
             aria-label="Section navigation"
-            className="sticky top-0 z-40 -mx-4 mb-10 border-b border-stone-900 bg-[#faf8f4]/90 px-4 backdrop-blur-sm sm:-mx-6 sm:px-6"
+            className="sticky top-0 z-40 -mx-4 mb-10 border-b border-stone-900 bg-[var(--paper)]/95 px-4 [background-image:var(--grain)] sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10"
         >
             <div className="-mx-2 flex items-center overflow-x-auto [scrollbar-width:none] sm:justify-center">
                 {links.map((link) => {
@@ -71,6 +73,7 @@ export default function SectionNav() {
                                 isActive ? "text-stone-900" : "text-stone-600 hover:text-stone-900"
                             }`}
                         >
+                            <span className="mr-1.5 text-amber-800/80">{link.page}</span>
                             {link.label}
                             <span
                                 className={`absolute bottom-2 left-2 h-px bg-amber-800 transition-all duration-300 ${

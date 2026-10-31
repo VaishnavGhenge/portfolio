@@ -15,11 +15,11 @@ const numbers = [
 ];
 
 const inside = [
-    { href: "#features", page: "A2", text: "Three side projects: bookable video calls, systemd, a Django profiler" },
-    { href: "#markets",  page: "B1", text: "Tech holdings, from core stack to watchlist" },
-    { href: "#opinion",  page: "C1", text: "Recent writing on Django" },
-    { href: "#comics", page: "D1", text: "Comics: The Night Shift" },
-    { href: "#classifieds", page: "D2", text: "Situation wanted" },
+    { href: "#features",    page: "A2", label: "Projects", text: "bookable video calls, a systemd dashboard, a Django profiler" },
+    { href: "#markets",     page: "B1", label: "Skills",   text: "tech holdings, from core stack to watchlist" },
+    { href: "#opinion",     page: "C1", label: "Writing",  text: "recent articles on Django" },
+    { href: "#comics",      page: "D1", label: "Comics",   text: "The Night Shift" },
+    { href: "#classifieds", page: "D2", label: "Contact",  text: "situation wanted" },
 ];
 
 const code = "rounded bg-stone-900/5 px-1 py-0.5 font-mono text-[0.85em] text-amber-800";
@@ -29,9 +29,9 @@ export default function FrontPage() {
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-0">
             {/* Lead story */}
             <article className="lg:col-span-8 lg:pr-8">
-                <p className="rubric text-amber-800">Profile · Noovosoft Technologies</p>
+                <p className="rubric text-amber-800">About Vaishnav · Software Developer, Noovosoft Technologies</p>
 
-                <h2 className="mt-3 font-serif text-[2rem] font-bold leading-[1.08] tracking-tight text-stone-900 sm:text-5xl">
+                <h2 className="ink mt-3 font-serif text-[2rem] font-bold leading-[1.08] tracking-tight text-stone-900 sm:text-5xl">
                     Recurring billing engine cuts revenue failures by 30%
                 </h2>
 
@@ -54,7 +54,7 @@ export default function FrontPage() {
                     ))}
                 </dl>
 
-                <div className="mt-6 gap-8 text-[15px] leading-relaxed text-stone-700 sm:columns-2 [&>p+p]:mt-4">
+                <div className="newsprint mt-6 gap-8 text-[15px] leading-relaxed text-stone-700 [column-rule:1px_solid_#d6d3d1] sm:columns-2 [&>p+p]:mt-4">
                     <p className="dropcap">
                         Ghenge architected the recurring billing engine behind Farmdesk&apos;s SaaS
                         subscriptions, built on Mollie with retry logic for failed charges. Revenue
@@ -99,14 +99,14 @@ export default function FrontPage() {
 
             {/* Sidebar */}
             <aside className="space-y-8 lg:col-span-4 lg:border-l lg:border-stone-900 lg:pl-8">
-                <section aria-labelledby="numbers-heading" className="hidden border-2 border-stone-900 bg-white p-5 lg:block">
+                <section aria-labelledby="numbers-heading" className="hidden border-2 border-stone-900 bg-[var(--paper-shade)]/50 p-5 lg:block">
                     <h3 id="numbers-heading" className="rubric border-b border-stone-900 pb-2 text-stone-900">
                         By the numbers
                     </h3>
                     <dl className="divide-y divide-stone-200">
                         {numbers.map((n) => (
                             <div key={n.figure} className="flex items-baseline gap-4 py-3">
-                                <dt className="w-20 shrink-0 font-serif text-3xl font-bold text-stone-900">{n.figure}</dt>
+                                <dt className="ink w-20 shrink-0 font-serif text-3xl font-bold text-stone-900">{n.figure}</dt>
                                 <dd className="text-sm leading-snug text-stone-700">{n.label}</dd>
                             </div>
                         ))}
@@ -156,7 +156,9 @@ export default function FrontPage() {
                             <li key={item.href}>
                                 <a href={item.href} className="group flex items-baseline gap-3 py-2.5 text-sm text-stone-700">
                                     <span className="rubric w-6 shrink-0 text-amber-800">{item.page}</span>
-                                    <span className="group-hover:text-amber-800 group-hover:underline">{item.text}</span>
+                                    <span className="group-hover:text-amber-800 group-hover:underline">
+                                        <span className="font-medium text-stone-900 group-hover:text-amber-800">{item.label}:</span> {item.text}
+                                    </span>
                                 </a>
                             </li>
                         ))}

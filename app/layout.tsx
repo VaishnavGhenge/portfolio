@@ -67,7 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className={`${newsreader.variable} ${playfair.variable} ${plexMono.variable} ${blackletter.variable} font-sans antialiased`}>
                 <SpeedInsights />
                 <Analytics />
-                <div className="mx-auto max-w-6xl px-4 pb-10 pt-8 sm:px-6 lg:pt-12">
+                <div className="sheet mx-auto max-w-6xl px-4 pb-10 pt-8 sm:px-6 lg:my-8 lg:px-10 lg:pt-10">
                     <header>
                         <Masthead />
                     </header>

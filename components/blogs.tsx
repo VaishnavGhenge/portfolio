@@ -31,18 +31,18 @@ export default async function Blogs() {
                     <li key={article.url} className="md:px-6 md:first:pl-0 md:last:pr-0">
                         <article>
                             {article.cover_image && (
-                                <div className="relative mb-3 aspect-[1000/420] overflow-hidden border border-stone-900">
-                                    {/* Grayscale so dev.to covers read as newsprint photos. */}
+                                <div className="halftone relative mb-3 aspect-[1000/420] overflow-hidden border border-stone-900">
+                                    {/* Grayscale, multiplied and screened so dev.to covers print like newspaper photos. */}
                                     <Image
                                         src={article.cover_image}
                                         alt=""
                                         fill
-                                        className="object-cover contrast-[1.1] grayscale"
+                                        className="printed object-cover contrast-[1.15] grayscale"
                                         sizes="(min-width: 768px) 540px, 100vw"
                                     />
                                 </div>
                             )}
-                            <h3 className="font-serif text-lg font-bold leading-snug text-stone-900">
+                            <h3 className="ink font-serif text-lg font-bold leading-snug text-stone-900">
                                 <a href={article.url} target="_blank" rel="noreferrer noopener" className="hover:text-amber-800">
                                     {article.title}
                                 </a>

@@ -48,7 +48,7 @@ const panels: Panel[] = [
 ];
 
 const INK = "#1c1917";
-const PAPER = "#faf8f4";
+const PAPER = "#f4efe3";
 
 // ─── Shared defs (rendered once, referenced by every panel) ──────────────────
 
@@ -292,7 +292,7 @@ function Speech({ lines }: { lines: [string, string] }) {
             {/* Balloon with its tail pointing down at the speaker, clear of the window */}
             <path
                 d="M180 -40 C180 -52, 188 -58, 200 -58 L478 -58 C490 -58, 498 -52, 498 -40 L498 -8 C498 4, 490 10, 478 10 L386 10 L376 80 L358 10 L200 10 C188 10, 180 4, 180 -8 Z"
-                fill="#fff"
+                fill={PAPER}
                 stroke={INK}
                 strokeWidth="2.2"
                 strokeLinejoin="round"
@@ -349,7 +349,7 @@ export default function ComicStrip() {
 
             <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 {panels.map((panel, i) => (
-                    <li key={panel.time} className="overflow-hidden border-2 border-stone-900 bg-white">
+                    <li key={panel.time} className="overflow-hidden border-2 border-stone-900">
                         <PanelArt panel={panel} index={i} />
                     </li>
                 ))}

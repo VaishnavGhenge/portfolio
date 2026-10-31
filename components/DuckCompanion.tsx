@@ -42,34 +42,35 @@ const LINES: Record<string, string[]> = {
         "the tests passed at 3:47.",
         "he explains it to me first.",
     ],
-    about: [
-        "he's been at this since 2018.",
-        "the diploma came first. the degree caught up.",
-    ],
-    experience: [
+    front: [
         "the billing engine was a whole thing.",
+        "he's been at this since 2018.",
         "ask him about the race condition.",
     ],
-    projects: [
+    features: [
         "i was there for all three.",
         "i was there for the N+1.",
         "the go binary has no dependencies. he mentions it.",
     ],
-    skills: [
+    markets: [
         "he rates himself honestly. mostly.",
         "three dots means he'd take the interview.",
     ],
-    blogs: [
+    opinion: [
         "he writes these at night.",
         "the django-silky one took a while.",
     ],
-    editorial: [
+    comics: [
         "that's me. i was the first reader.",
         "i don't say much. i just sit there.",
     ],
+    classifieds: [
+        "he answers email. i've seen it.",
+        "the diploma came first. the degree caught up.",
+    ],
 };
 
-const SECTIONS = ["about", "experience", "projects", "skills", "blogs", "editorial"];
+const SECTIONS = ["front", "features", "markets", "opinion", "comics", "classifieds"];
 
 function Sprite({ blinking }: { blinking: boolean }) {
     const rows = blinking ? BLINK : OPEN;
@@ -207,7 +208,7 @@ export default function DuckCompanion() {
         >
             <div aria-live="polite" className="min-h-0">
                 {line && (
-                    <p className="duck-bubble max-w-[190px] border border-stone-900 bg-white px-2.5 py-1.5 font-mono text-[10px] leading-snug text-stone-700 shadow-[3px_3px_0_rgba(28,25,23,0.12)]">
+                    <p className="duck-bubble max-w-[190px] border border-stone-900 bg-[var(--paper)] px-2.5 py-1.5 font-mono text-[10px] leading-snug text-stone-700 shadow-[3px_3px_0_rgba(28,25,23,0.12)]">
                         {line}
                     </p>
                 )}

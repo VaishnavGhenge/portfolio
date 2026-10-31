@@ -27,7 +27,7 @@ function SessionlyFigure() {
 
             {steps.map((st, i) => (
                 <g key={st.title}>
-                    <rect x={st.x} y="30" width="88" height="50" fill="#fff" stroke={INK} strokeWidth={i === 2 ? 2 : 1.3} />
+                    <rect x={st.x} y="30" width="88" height="50" fill="none" stroke={INK} strokeWidth={i === 2 ? 2 : 1.3} />
                     <text x={st.x + 44} y="50" textAnchor="middle" fontFamily="Georgia, serif" fontSize="11" fontWeight="700" fill={INK}>{st.title}</text>
                     <text x={st.x + 44} y="64" textAnchor="middle" fontFamily="monospace" fontSize="6.5" fill="#57534e">{st.sub}</text>
                     <text x={st.x + 44} y="22" textAnchor="middle" fontFamily="monospace" fontSize="7" fill={ACCENT}>{i + 1}</text>
@@ -92,7 +92,7 @@ function SilkyFigure() {
                 {flame.map((f) => (
                     <div
                         key={f.label}
-                        className={`flex items-center justify-center text-[9px] ${f.hatch ? "text-amber-900" : "bg-stone-100 text-stone-700"}`}
+                        className={`flex items-center justify-center text-[9px] ${f.hatch ? "text-amber-900" : "bg-stone-900/5 text-stone-700"}`}
                         style={{
                             flexBasis: `${f.share}%`,
                             backgroundImage: f.hatch ? "repeating-linear-gradient(135deg, rgba(154,52,18,0.22) 0 2px, transparent 2px 5px)" : undefined,
@@ -167,15 +167,15 @@ export default function Projects() {
                         {s.name}
                         {s.formerly && <span className="text-stone-600"> · formerly {s.formerly}</span>}
                     </p>
-                    <h3 className="mt-2 font-serif text-2xl font-bold leading-tight text-stone-900">
+                    <h3 className="ink mt-2 font-serif text-2xl font-bold leading-tight text-stone-900">
                         <a href={s.url} target="_blank" rel="noreferrer" className="hover:text-amber-800">
                             {s.headline}
                         </a>
                     </h3>
 
-                    <p className="mt-3 text-[15px] leading-relaxed text-stone-700">{s.body}</p>
+                    <p className="newsprint mt-3 text-[15px] leading-relaxed text-stone-700">{s.body}</p>
 
-                    <figure className="mt-5 border border-stone-900 bg-white">
+                    <figure className="mt-5 border border-stone-900">
                         <div className="flex min-h-[140px] items-center">{s.figure}</div>
                         <figcaption className="border-t border-stone-300 px-3 py-2 text-xs leading-snug text-stone-700">
                             <span className="rubric text-stone-900">Fig. {i + 1}</span>{" "}

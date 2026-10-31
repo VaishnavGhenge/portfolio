@@ -4,9 +4,9 @@ import { EMAIL, SOCIALS } from "./SocialLinks";
 export default function Classifieds() {
     return (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="border-2 border-stone-900 bg-white p-5 sm:col-span-2">
+            <div className="border-2 border-stone-900 p-5 sm:col-span-2">
                 <p className="rubric text-amber-800">Situation wanted</p>
-                <p className="mt-2 font-serif text-2xl font-bold leading-snug text-stone-900">
+                <p className="ink mt-2 font-serif text-2xl font-bold leading-snug text-stone-900">
                     Building something that needs to hold up under load?
                 </p>
                 <p className="mt-2 text-[15px] leading-relaxed text-stone-700">
