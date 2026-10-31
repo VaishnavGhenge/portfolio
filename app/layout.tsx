@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Newsreader, Playfair_Display, IBM_Plex_Mono, UnifrakturMaguntia } from "next/font/google";
+import { Newsreader, Playfair_Display, IBM_Plex_Mono, UnifrakturMaguntia, Patrick_Hand_SC } from "next/font/google";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react"
@@ -26,6 +26,14 @@ const blackletter = UnifrakturMaguntia({
     subsets: ["latin"],
     variable: "--font-blackletter",
     weight: "400",
+});
+
+// Hand lettering for the comics page. Far below the fold, so it is not preloaded.
+const comic = Patrick_Hand_SC({
+    subsets: ["latin"],
+    variable: "--font-comic",
+    weight: "400",
+    preload: false,
 });
 
 const plexMono = IBM_Plex_Mono({
@@ -64,7 +72,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className={`${newsreader.variable} ${playfair.variable} ${plexMono.variable} ${blackletter.variable} font-sans antialiased`}>
+            <body className={`${newsreader.variable} ${playfair.variable} ${plexMono.variable} ${blackletter.variable} ${comic.variable} font-sans antialiased`}>
                 <SpeedInsights />
                 <Analytics />
                 <div className="sheet mx-auto max-w-6xl px-4 pb-10 pt-8 sm:px-6 lg:my-8 lg:px-10 lg:pt-10">

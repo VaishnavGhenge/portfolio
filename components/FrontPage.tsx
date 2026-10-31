@@ -18,7 +18,7 @@ const inside = [
     { href: "#features",    page: "A2", label: "Projects", text: "bookable video calls, a systemd dashboard, a Django profiler" },
     { href: "#markets",     page: "B1", label: "Skills",   text: "tech holdings, from core stack to watchlist" },
     { href: "#opinion",     page: "C1", label: "Writing",  text: "recent articles on Django" },
-    { href: "#comics",      page: "D1", label: "Comics",   text: "The Night Shift" },
+    { href: "#comics",      page: "D1", label: "Comics",   text: "Retry Logic, a Sunday strip" },
     { href: "#classifieds", page: "D2", label: "Contact",  text: "situation wanted" },
 ];
 
@@ -99,7 +99,7 @@ export default function FrontPage() {
 
             {/* Sidebar */}
             <aside className="space-y-8 lg:col-span-4 lg:border-l lg:border-stone-900 lg:pl-8">
-                <section aria-labelledby="numbers-heading" className="hidden border-2 border-stone-900 bg-[var(--paper-shade)]/50 p-5 lg:block">
+                <section aria-labelledby="numbers-heading" className="hidden border-2 border-stone-900 bg-[#ebe4d3]/50 p-5 lg:block">
                     <h3 id="numbers-heading" className="rubric border-b border-stone-900 pb-2 text-stone-900">
                         By the numbers
                     </h3>

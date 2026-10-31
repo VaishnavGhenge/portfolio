@@ -3,43 +3,23 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
- * A 16x14 pixel sprite of the duck from the editorial cartoon, docked in the
- * corner. It idles, blinks, and says something if you talk to it. Nothing more.
+ * The rubber duck from the comics page, docked in the corner. It idles, blinks,
+ * and says something if you talk to it. Nothing more. Drawn like the strip: an
+ * ink line over a yellow plate printed slightly out of register.
  */
 
-const PALETTE: Record<string, string> = {
-    y: "#fcd34d", // body
-    d: "#d9a521", // underside shading
-    o: "#f97316", // beak
-    k: "#1c1917", // eye
-};
+const INK = "#1c1917";
 
-const OPEN = [
-    "......yyyy......",
-    ".....yyyyyy.....",
-    "....yyyyyyyy....",
-    "....yykyyyyy....",
-    "....yyyyyyyyoo..",
-    "....yyyyyyyyoo..",
-    "....yyyyyyyy....",
-    "...yyyyyyyy.....",
-    "..yyyyyyyyyyy...",
-    ".yyyyyyyyyyyyy..",
-    "yyyyyyyyyyyyyyy.",
-    "yyyyyyyyyyyyyyy.",
-    ".yyyyyyyyyyyyy..",
-    "..ddddddddddd...",
-];
-
-const BLINK = [...OPEN];
-BLINK[3] = "....yykkyyyy....";
+const BODY = "M248 244 C240 232, 245 218, 259 215 C274 212, 287 220, 289 232 C290 240, 286 244, 282 245 C271 246, 258 246, 248 244 Z";
+const HEAD = "M277 214 C273 204, 278 194, 288 193 C297 192, 304 199, 304 208 C304 214, 300 219, 294 220 C287 221, 280 219, 277 214 Z";
+const BEAK = "M303 205 C310 202, 316 205, 315 210 C314 214, 307 214, 302 211 Z";
 
 /** What the duck has to say, depending on what you're reading. */
 const LINES: Record<string, string[]> = {
     default: [
         "quack.",
         "still reading?",
-        "the tests passed at 3:47.",
+        "i heard about the race condition first.",
         "he explains it to me first.",
     ],
     front: [
@@ -61,8 +41,8 @@ const LINES: Record<string, string[]> = {
         "the django-silky one took a while.",
     ],
     comics: [
-        "that's me. i was the first reader.",
-        "i don't say much. i just sit there.",
+        "that's me, panel five. i said nothing. it helped.",
+        "the boss is fictional. so is the cigar.",
     ],
     classifieds: [
         "he answers email. i've seen it.",
@@ -73,24 +53,22 @@ const LINES: Record<string, string[]> = {
 const SECTIONS = ["front", "features", "markets", "opinion", "comics", "classifieds"];
 
 function Sprite({ blinking }: { blinking: boolean }) {
-    const rows = blinking ? BLINK : OPEN;
-
     return (
-        <svg
-            viewBox="0 0 16 14"
-            width="40"
-            height="35"
-            shapeRendering="crispEdges"
-            aria-hidden="true"
-            className="overflow-visible"
-        >
-            {rows.map((row, y) =>
-                row.split("").map((ch, x) =>
-                    ch === "." ? null : (
-                        <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill={PALETTE[ch]} />
-                    )
-                )
-            )}
+        <svg viewBox="236 188 84 62" width="54" height="40" aria-hidden="true" className="overflow-visible">
+            <g transform="translate(1.6 1)">
+                <path d={BODY} fill="#f5c518" />
+                <path d={HEAD} fill="#f5c518" />
+                <path d={BEAK} fill="#e8692a" />
+            </g>
+            <g fill="#fff" stroke={INK} strokeLinecap="round" strokeLinejoin="round" style={{ mixBlendMode: "multiply" }}>
+                <path d={BODY} strokeWidth="2.6" />
+                <path d={HEAD} strokeWidth="2.6" />
+                <path d={BEAK} strokeWidth="2" />
+                <path d="M257 229 C264 224, 275 226, 278 233" fill="none" strokeWidth="2" />
+                {blinking
+                    ? <path d="M291 204 L296 204" strokeWidth="2" />
+                    : <circle cx="293.5" cy="204" r="2.2" fill={INK} stroke="none" />}
+            </g>
         </svg>
     );
 }
@@ -208,7 +186,10 @@ export default function DuckCompanion() {
         >
             <div aria-live="polite" className="min-h-0">
                 {line && (
-                    <p className="duck-bubble max-w-[190px] border border-stone-900 bg-[var(--paper)] px-2.5 py-1.5 font-mono text-[10px] leading-snug text-stone-700 shadow-[3px_3px_0_rgba(28,25,23,0.12)]">
+                    <p
+                        className="duck-bubble relative mr-3 max-w-[200px] rounded-[10px] border-[1.5px] border-stone-900 bg-[#fbf5e6] px-3 py-1.5 text-[15px] leading-tight text-stone-900 after:absolute after:-bottom-[9px] after:right-5 after:h-4 after:w-4 after:rotate-[30deg] after:skew-x-[25deg] after:border-b-[1.5px] after:border-r-[1.5px] after:border-stone-900 after:bg-[#fbf5e6]"
+                        style={{ fontFamily: "var(--font-comic), cursive", fontVariantLigatures: "none" }}
+                    >
                         {line}
                     </p>
                 )}

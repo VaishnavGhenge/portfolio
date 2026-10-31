@@ -59,7 +59,7 @@ export default function SectionNav() {
     return (
         <nav
             aria-label="Section navigation"
-            className="sticky top-0 z-40 -mx-4 mb-10 border-b border-stone-900 bg-[var(--paper)]/95 px-4 [background-image:var(--grain)] sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10"
+            className="sticky top-0 z-40 -mx-4 mb-10 border-b border-stone-900 bg-[var(--paper)] px-4 [background-image:var(--grain)] sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10"
         >
             <div className="-mx-2 flex items-center overflow-x-auto [scrollbar-width:none] sm:justify-center">
                 {links.map((link) => {
